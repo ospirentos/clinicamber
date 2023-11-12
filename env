@@ -1,0 +1,16 @@
+# @strapi-community/dockerize variables 
+DATABASE_HOST=strapi
+DATABASE_PORT=5432
+DATABASE_NAME=strapi
+DATABASE_USERNAME=strapi
+DATABASE_PASSWORD=strapi
+NODE_ENV=development
+DATABASE_CLIENT=postgres
+ADMIN_JWT_SECRET=UXfkrJWtvFadvFFMYnK7ag==
+JWT_SECRET=cYFb3XUVaUIesdMFWfLeyA==
+HOST=0.0.0.0
+PORT=1337
+APP_KEYS=Sl8opzwpjZVA9qU6ZXEziQ==,TWsRfUUjMpNvKp1oNLzeQA==,ZDDrIvEnzAzbSqnbmP+DYw==,V8gaD797GD2P9MWKXgzx6Q==
+API_TOKEN_SALT=z+Pzrry6xfNlg9GjPp2J2w==
+TRANSFER_TOKEN_SALT=cYFb3XUVaUIesdMFWfLeyA==
+# @strapi-community/dockerize end variables 
