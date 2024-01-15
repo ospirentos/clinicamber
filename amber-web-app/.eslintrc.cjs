@@ -3,7 +3,7 @@ module.exports = {
         "browser": true,
         "es2021": true
     },
-    "extends": "@remix-run/eslint-config",
+    "extends": ["@remix-run/eslint-config", "prettier"],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
