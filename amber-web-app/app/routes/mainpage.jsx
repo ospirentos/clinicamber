@@ -13,8 +13,11 @@ import { WhatsAppFloatingButton } from "../images/WhatsAppFloatingButton";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
+  const apiUrl = process.env.API_URL;
+  const publicToken = process.env.PUBLIC_WEB_TOKEN;
   let doctors = await fetch(
-    "http://cms.clinicamberd.com/api/doctors?" +
+    apiUrl +
+      "doctors?" +
       new URLSearchParams({
         locale: locale,
         "populate[image][fields][0]": "url",
@@ -22,14 +25,14 @@ export async function loader({ request }) {
     {
       method: "get",
       headers: new Headers({
-        Authorization:
-          "Bearer 9781a69030e69996f5e103bc7425adcd919f712a6d65862753ca5052b9c63eac85e8a32a1861dec6947dbca4fc9398b4414c605f43a6472c071365fadab19ff135c4ee72f90e5fa501e5bc3ef55c76af7177b9dd27587fbc2e946ea9e8ef9aeaaff8c7c29c9417c1ba882497fffbd94fbcd0167670bda820679860eef965ee9c",
+        Authorization: "Bearer " + publicToken,
         "Content-Type": "application/x-www-form-urlencoded",
       }),
-    },
+    }
   ).then((res) => res.json());
   let services = await fetch(
-    "http://cms.clinicamberd.com/api/services?" +
+    apiUrl +
+      "services?" +
       new URLSearchParams({
         locale: locale,
         "populate[image][fields][0]": "url",
@@ -37,15 +40,15 @@ export async function loader({ request }) {
     {
       method: "get",
       headers: new Headers({
-        Authorization:
-          "Bearer 9781a69030e69996f5e103bc7425adcd919f712a6d65862753ca5052b9c63eac85e8a32a1861dec6947dbca4fc9398b4414c605f43a6472c071365fadab19ff135c4ee72f90e5fa501e5bc3ef55c76af7177b9dd27587fbc2e946ea9e8ef9aeaaff8c7c29c9417c1ba882497fffbd94fbcd0167670bda820679860eef965ee9c",
+        Authorization: "Bearer " + publicToken,
         "Content-Type": "application/x-www-form-urlencoded",
       }),
-    },
+    }
   ).then((res) => res.json());
 
   let blogs = await fetch(
-    "http://cms.clinicamberd.com/api/blogs?" +
+    apiUrl +
+      "blogs?" +
       new URLSearchParams({
         locale: locale,
         "populate[image][fields][0]": "url",
@@ -53,11 +56,10 @@ export async function loader({ request }) {
     {
       method: "get",
       headers: new Headers({
-        Authorization:
-          "Bearer 9781a69030e69996f5e103bc7425adcd919f712a6d65862753ca5052b9c63eac85e8a32a1861dec6947dbca4fc9398b4414c605f43a6472c071365fadab19ff135c4ee72f90e5fa501e5bc3ef55c76af7177b9dd27587fbc2e946ea9e8ef9aeaaff8c7c29c9417c1ba882497fffbd94fbcd0167670bda820679860eef965ee9c",
+        Authorization: "Bearer " + publicToken,
         "Content-Type": "application/x-www-form-urlencoded",
       }),
-    },
+    }
   ).then((res) => res.json());
 
   return { locale, doctors, services, blogs };
