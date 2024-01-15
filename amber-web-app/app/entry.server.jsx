@@ -15,7 +15,7 @@ export default async function handleRequest(
   request,
   responseStatusCode,
   responseHeaders,
-  remixContext
+  remixContext,
 ) {
   let callbackName = isbot(request.headers.get("user-agent"))
     ? "onAllReady"
@@ -52,7 +52,7 @@ export default async function handleRequest(
             new Response(body, {
               headers: responseHeaders,
               status: didError ? 500 : responseStatusCode,
-            })
+            }),
           );
 
           pipe(body);
@@ -65,7 +65,7 @@ export default async function handleRequest(
 
           console.error(error);
         },
-      }
+      },
     );
 
     setTimeout(abort, ABORT_DELAY);
