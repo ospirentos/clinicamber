@@ -3,8 +3,8 @@ version: '3.5'
 services:
   amber-cms:
     container_name: amber-cms
-    build: amber-cms
-    image: amber-cms:latest
+    build:
+      context: amber-cms
     restart: unless-stopped
     env_file: .env
     environment:
@@ -75,18 +75,18 @@ services:
       - 80:80
 
       
-  app:
-    container_name: amber-clinic-app
-    build: 
-      context: amber-clinic-app
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./amber-clinic-app:/app
-      - /app/node_modules
-      - static-web-files:/app/build
-    networks:
-    - amber-cms
+  # app:
+  #   container_name: amber-clinic-app
+  #   build: 
+  #     context: amber-clinic-app
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./amber-clinic-app:/app
+  #     - /app/node_modules
+  #     - static-web-files:/app/build
+  #   networks:
+  #   - amber-cms
 volumes:
   amber-cms-data:
   static-web-files:
