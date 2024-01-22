@@ -96,6 +96,7 @@ export default function MainPage() {
                 image={service.attributes.image.data.attributes.url}
                 title={service.attributes.title}
                 shortText={service.attributes.shortText}
+                slug={service.attributes.slug}
               />
             ))}
           </div>

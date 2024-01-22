@@ -2,12 +2,17 @@ import React from "react";
 import { Card, CardHeader, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 import { Button } from "@nextui-org/button";
+import { useNavigate } from "@remix-run/react";
 
-export function ServiceCard({ title, shortText, image }) {
+export function ServiceCard({ title, shortText, image, slug }) {
+  let navigate = useNavigate();
+
   return (
     <Card
       className="min-w-[12rem] my-4 sm:col-span-12 sm:col-span-4 sm:h-[300px]"
       isFooterBlurred
+      isPressable
+      onPress={() => navigate(`/services/${slug}`)}
     >
       <CardHeader className=" z-10 top-1 flex-col ">
         <h4 className="text-black font-medium text-large">{title}</h4>
