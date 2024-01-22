@@ -1,5 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
 import i18next from "../i18next.server";
+import { RichTextRenderer } from "../components/RichTextRenderer";
 
 export const loader = async ({ params, request }) => {
   let locale = await i18next.getLocale(request);
@@ -11,6 +12,7 @@ export const loader = async ({ params, request }) => {
       new URLSearchParams({
         locale: locale,
         "populate[image][fields][0]": "url",
+        "populate[image][fields][1]": "alternativeText",
         "filters[slug][$eq]": params.slug,
       }),
     {
@@ -29,5 +31,18 @@ export default function Doctor() {
 
   console.log("Doctor is: ", doctor);
 
-  return <div>Bu sayfa bilgisini içeriyor</div>;
+  return (
+    <>
+      <img
+        src={
+          "http://cms.clinicamberd.com" +
+          doctor.data[0]?.attributes.image.data.attributes.url
+        }
+        alt={doctor.data[0]?.attributes.image.data.attributes.alternativeText}
+      ></img>
+      {doctor.data[0]?.attributes.cvText.map((item, index) => (
+        <RichTextRenderer key={index} {...item} />
+      ))}
+    </>
+  );
 }
