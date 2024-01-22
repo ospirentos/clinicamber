@@ -108,6 +108,7 @@ export default function MainPage() {
                 image={blog.attributes.image.data.attributes.url}
                 firstTitle={blog.attributes.firstTitle}
                 secondTitle={blog.attributes.secondTitle}
+                slug={blog.attributes.slug}
               />
             ))}
           </div>
