@@ -10,7 +10,12 @@ export default {
     "./app/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        vollkorn: ["Vollkorn", "serif"],
+      },
+    },
   },
   darkMode: "class",
   plugins: [nextui()],
