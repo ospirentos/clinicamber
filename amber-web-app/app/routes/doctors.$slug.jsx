@@ -29,8 +29,6 @@ export const loader = async ({ params, request }) => {
 export default function Doctor() {
   const { doctor } = useLoaderData();
 
-  console.log("Doctor is: ", doctor);
-
   return (
     <>
       <div className="grid gap-4 grid-cols-24 grid-rows-1">
