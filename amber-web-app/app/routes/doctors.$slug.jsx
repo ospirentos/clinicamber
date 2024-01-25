@@ -1,7 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
 import i18next from "../i18next.server";
 import { RichTextRenderer } from "../components/RichTextRenderer";
-import { AmberLogo } from "../images/AmberLogo";
 
 export const loader = async ({ params, request }) => {
   let locale = await i18next.getLocale(request);
@@ -44,10 +43,7 @@ export default function Doctor() {
           alt={doctor.data[0]?.attributes.image.data.attributes.alternativeText}
         ></img>
         <div className="col-start-10 col-span-14">
-          <div className="w-16">
-            <AmberLogo />
-          </div>
-          <div className="text-lg font-semibold mb-5">Meet The Doctor</div>
+          <div className="text-lg font-thin mb-5">Meet The Doctor</div>
           {doctor.data[0]?.attributes.cvText.map((item, index) => (
             <RichTextRenderer key={index} {...item} />
           ))}

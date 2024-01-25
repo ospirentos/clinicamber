@@ -82,7 +82,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="font-poppins">
         <NextUIProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -161,7 +161,7 @@ export default function App() {
 
             <Outlet />
 
-            <footer className="w-full h-auto bottom-0 left-0 px-6 py-24 flex items-center justify-center flex-col">
+            <footer className="w-full h-auto bottom-0 left-0 px-6 py-12 flex items-center justify-center flex-col">
               <div className="flex gap-4 max-w-[1024px] mb-4">
                 <div className="flex justify-between items-center flex-1">
                   <img

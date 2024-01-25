@@ -22,31 +22,31 @@ const Header = ({ level, children }) => {
         switch (level) {
           case 1:
             return (
-              <h1 className="text-5xl">
+              <h1 className="text-4xl text-amber-500 font-vollkorn mt-8 mb-2">
                 <Text children={children} />
               </h1>
             );
           case 2:
             return (
-              <h2 className="text-4xl">
+              <h2 className="text-3xl text-amber-500 font-vollkorn mt-8 mb-2">
                 <Text children={children} />
               </h2>
             );
           case 3:
             return (
-              <h3 className="text-3xl">
+              <h3 className="text-2xl text-amber-500 font-vollkorn mt-8 mb-2">
                 <Text children={children} />
               </h3>
             );
           case 4:
             return (
-              <h4 className="text-2xl">
+              <h4 className="text-1xl text-amber-500 font-vollkorn mt-8 mb-2">
                 <Text children={children} />
               </h4>
             );
           case 5:
             return (
-              <h5 className="text-xl">
+              <h5 className="text-lg text-amber-500 font-vollkorn mt-8 mb-2">
                 <Text children={children} />
               </h5>
             );
@@ -60,7 +60,7 @@ const Paragraph = ({ children }) => {
   return (
     <>
       {(() => (
-        <p>
+        <p className="font-poppins my-6">
           <Text children={children} />
         </p>
       ))()}
@@ -75,7 +75,7 @@ const List = ({ format, children }) => {
         switch (format) {
           case "unordered":
             return (
-              <ul className="list-disc list-inside">
+              <ul className="list-disc list-inside mx-4">
                 <ListItems children={children} />
               </ul>
             );
@@ -108,11 +108,9 @@ const ListItems = ({ children }) => {
 const Text = ({ children }) => {
   return (
     <>
-      {children.map((item, index) => (
-        <span key={index}>
-          {item.bold ? <b>{item.text}</b> : <>{item.text}</>}
-        </span>
-      ))}
+      {children.map((item, index) =>
+        item.bold ? <b key={index}>{item.text}</b> : <>{item.text}</>
+      )}
     </>
   );
 };
