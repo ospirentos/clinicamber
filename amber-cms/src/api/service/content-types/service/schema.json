@@ -65,6 +65,16 @@
       "type": "string",
       "unique": false,
       "required": true
+    },
+    "qaList": {
+      "type": "component",
+      "repeatable": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "special-fields.question-answer-list"
     }
   }
 }

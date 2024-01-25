@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_special_fields_question_answer_lists",
+  "info": {
+    "displayName": "Question / Answer List",
+    "icon": "file"
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "text"
+    },
+    "answer": {
+      "type": "blocks"
+    }
+  }
+}
