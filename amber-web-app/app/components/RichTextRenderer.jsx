@@ -56,7 +56,7 @@ const Header = ({ level, children }) => {
   );
 };
 
-const Paragraph = ({ children }) => {
+export const Paragraph = ({ children }) => {
   return (
     <>
       {(() => (
@@ -109,7 +109,11 @@ const Text = ({ children }) => {
   return (
     <>
       {children.map((item, index) =>
-        item.bold ? <b key={index}>{item.text}</b> : <>{item.text}</>
+        item.bold ? (
+          <b key={index}>{item.text}</b>
+        ) : (
+          <span key={index}>{item.text}</span>
+        )
       )}
     </>
   );
