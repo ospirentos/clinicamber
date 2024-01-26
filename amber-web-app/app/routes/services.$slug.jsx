@@ -1,6 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import i18next from "../i18next.server";
 import { RichTextRenderer } from "../components/RichTextRenderer";
+import { Accordion, AccordionItem } from "@nextui-org/accordion";
 
 export const loader = async ({ params, request }) => {
   let locale = await i18next.getLocale(request);
@@ -13,6 +14,8 @@ export const loader = async ({ params, request }) => {
         locale: locale,
         "populate[image][fields][0]": "url",
         "populate[image][fields][1]": "alternativeText",
+        "populate[qaList][fields][0]": "question",
+        "populate[qaList][fields][1]": "answer",
         "filters[slug][$eq]": params.slug,
       }),
     {
@@ -39,6 +42,23 @@ export default function Service() {
         alt={service.data[0]?.attributes.image.data.attributes.alternativeText}
       ></img>
       {service.data[0]?.attributes.longText.map((item, index) => (
+        <RichTextRenderer key={index} {...item} />
+      ))}
+      <Accordion>
+        {service.data[0]?.attributes.qaList.map((item) => (
+          <AccordionItem
+            key={item.id}
+            title={
+              <span className="font-vollkorn text-xl">{item.question}</span>
+            }
+          >
+            {item.answer.map((answer, index) => (
+              <RichTextRenderer key={index} {...answer} />
+            ))}
+          </AccordionItem>
+        ))}
+      </Accordion>
+      {service.data[0]?.attributes.qaFinalizeText.map((item, index) => (
         <RichTextRenderer key={index} {...item} />
       ))}
     </>
