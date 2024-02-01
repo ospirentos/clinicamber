@@ -10,6 +10,7 @@ import { useChangeLanguage } from "remix-i18next";
 import i18next from "../i18next.server";
 import { GoogleMap } from "../components/GoogleMap";
 import { WhatsAppFloatingButton } from "../images/WhatsAppFloatingButton";
+import banner from "../images/banner_1.jpg";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
@@ -74,6 +75,16 @@ export default function MainPage() {
 
   return (
     <>
+      <div className="relative text-center lg:h-[600px] overflow-hidden">
+        <img
+          src={banner}
+          alt="smiling women hugging dentist chair"
+          className="w-full"
+        />
+        <div className="font-vollkorn italic mt-4  sm:absolute sm:top-24 sm:left-8 sm:text-2xl md:text-2xl lg:text-4xl lg:left-[10%]">
+          {t("bannerSideText")}
+        </div>
+      </div>
       <div className="flex items-center w-full h-auto justify-center">
         <div className="px-6 w-full max-w-[1024px]">
           <SectionTitle title={t("doctors")} />
