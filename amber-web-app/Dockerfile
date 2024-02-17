@@ -1,0 +1,8 @@
+FROM node:20-alpine
+USER node
+WORKDIR /home/node/app
+COPY --chown=node:node . .
+RUN npm ci
+RUN npx remix build
+CMD [ "npx", "remix-serve", "build/index.js" ]
+

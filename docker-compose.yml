@@ -1,7 +1,7 @@
-version: '3.5'
+version: "3.5"
 
 services:
-  amber-cms:
+  amber-cms-app:
     container_name: amber-cms
     build:
       context: amber-cms
@@ -26,12 +26,12 @@ services:
       - ./.env:/opt/app/.env
       - ./amber-cms/public/uploads:/opt/app/public/uploads
     ports:
-      - '1337:1337'
+      - "1337:1337"
     networks:
       - amber-cms
     depends_on:
       - amber-cmsDB
-      
+
   amber-cmsDB:
     container_name: amber-cmsDB
     platform: linux/amd64 #for platform error on Apple M1 chips
@@ -47,16 +47,16 @@ services:
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
 
     ports:
-      - '5432:5432'
+      - "5432:5432"
     networks:
       - amber-cms
-      
+
   amber-cmsAdminer:
     container_name: amber-cmsAdminer
     image: adminer
     restart: unless-stopped
     ports:
-      - '9090:8080'
+      - "9090:8080"
     environment:
       - ADMINER_DEFAULT_SERVER=amber-cmsDB
     networks:
@@ -73,20 +73,20 @@ services:
       - amber-cms
     ports:
       - 80:80
-
-      
-  # app:
-  #   container_name: amber-clinic-app
-  #   build: 
-  #     context: amber-clinic-app
-  #   ports:
-  #     - '3000:3000'
-  #   volumes:
-  #     - ./amber-clinic-app:/app
-  #     - /app/node_modules
-  #     - static-web-files:/app/build
-  #   networks:
-  #   - amber-cms
+  web-app:
+    container_name: amber-web-app
+    build:
+      context: amber-web-app
+    ports:
+      - "3000:3000"
+    networks:
+      - amber-cms
+    env_file: .env
+    environment:
+      - API_URL=${WEB_API_URL}
+      - PUBLIC_WEB_TOKEN=${WEB_PUBLIC_TOKEN}
+      - NODE_ENV=${NODE_ENV}
+      - PORT=3000
 volumes:
   amber-cms-data:
   static-web-files:
