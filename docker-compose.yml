@@ -65,10 +65,10 @@ services:
       - amber-cmsDB
 
   reverse-proxy:
-    image: nginx
-    volumes:
-      - ./nginx:/etc/nginx/conf.d/
-      - static-web-files:/usr/share/nginx/html
+    container_name: nginx-reverse-proxy
+    build:
+      context: nginx
+      dockerfile: ./Dockerfile
     networks:
       - amber-cms
     ports:
