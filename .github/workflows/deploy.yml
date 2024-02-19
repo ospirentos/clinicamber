@@ -2,7 +2,7 @@ name: deploy-server
 on:
   push:
     branches:
-      - "main"
+      - master
 jobs:
   ssh-copy-to-server:
     runs-on: ubuntu-latest
