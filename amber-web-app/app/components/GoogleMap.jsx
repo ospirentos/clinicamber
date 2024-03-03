@@ -1,12 +1,7 @@
 import React from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect } from "react";
-
-const loader = new Loader({
-  apiKey: process.env.WEB_GOOGLE_MAPS_API_KEY,
-  version: "weekly",
-  libraries: ["maps"],
-});
+import { useLoaderData } from "@remix-run/react";
 
 const mapOptions = {
   center: {
@@ -17,9 +12,17 @@ const mapOptions = {
 };
 
 export const GoogleMap = () => {
+  const {ENV} = useLoaderData()
+
   let map;
 
   useEffect(() => {
+    const loader = new Loader({
+      apiKey: ENV.GOOGLE_API_KEY,
+      version: "weekly",
+      libraries: ["maps"],
+    });
+
     loader.importLibrary("maps").then(({ Map }) => {
       map = new Map(document.getElementById("map"), mapOptions);
 

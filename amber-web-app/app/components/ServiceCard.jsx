@@ -27,7 +27,7 @@ export function ServiceCard({ title, shortText, image, slug }) {
         <p className="hidden sm:block sm:text-tiny sm:text-white/80">
           {shortText}
         </p>
-        <Button
+        <div
           className="text-tiny text-white bg-black/20"
           variant="flat"
           color="default"
@@ -35,7 +35,7 @@ export function ServiceCard({ title, shortText, image, slug }) {
           size="sm"
         >
           Daha Fazla
-        </Button>
+        </div>
       </CardFooter>
     </Card>
   );

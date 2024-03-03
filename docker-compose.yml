@@ -79,14 +79,23 @@ services:
       context: amber-web-app
     ports:
       - "3000:3000"
+      - "3001:3001"
+      - "8002:8002"
     networks:
       - amber-cms
     env_file: .env
     environment:
       - API_URL=${WEB_API_URL}
       - PUBLIC_WEB_TOKEN=${WEB_PUBLIC_TOKEN}
-      - NODE_ENV=${NODE_ENV}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - NODE_ENV=development
       - PORT=3000
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_HOST=127.0.0.1
+      - WDS_SOCKET_PORT=3000
+    volumes:
+      - ./amber-web-app/app/:/home/node/app/app/
 volumes:
   amber-cms-data:
   static-web-files:

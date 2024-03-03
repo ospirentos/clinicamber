@@ -202,7 +202,7 @@ export default function App() {
               </div>
             </footer>
             <Scripts />
-            <LiveReload />
+            <LiveReload port={3001}/>
           </div>
         </NextUIProvider>
       </body>

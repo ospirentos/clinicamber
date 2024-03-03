@@ -1,5 +1,6 @@
 import React from "react";
 import { useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
 
 import { SectionTitle } from "../components/SectionTitle";
 import { DentistCard } from "../components/DentistCard";
@@ -16,6 +17,9 @@ export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
   const apiUrl = process.env.API_URL;
   const publicToken = process.env.PUBLIC_WEB_TOKEN;
+
+  let ENV = {GOOGLE_API_KEY: process.env.GOOGLE_API_KEY}
+
   let doctors = await fetch(
     apiUrl +
       "doctors?" +
@@ -63,7 +67,7 @@ export async function loader({ request }) {
     }
   ).then((res) => res.json());
 
-  return { locale, doctors, services, blogs };
+  return { locale, doctors, services, blogs, ENV };
 }
 
 export default function MainPage() {

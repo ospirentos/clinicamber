@@ -7,5 +7,5 @@ export default {
     "@googlemaps/js-api-loader",
   ],
   serverModuleFormat: "esm",
-  serverPlatform: "node",
+  serverPlatform: "node"
 };
