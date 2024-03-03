@@ -25,4 +25,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: whoami
+          script: docker compose -f /home/ospirentos/clinicamber/docker-compose.prod.yml up -d --build
