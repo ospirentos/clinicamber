@@ -17,8 +17,7 @@ export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
   const apiUrl = process.env.API_URL;
   const publicToken = process.env.PUBLIC_WEB_TOKEN;
-
-  let ENV = {GOOGLE_API_KEY: process.env.GOOGLE_API_KEY}
+  const WEB_CMS_BASE_URL = process.env.WEB_CMS_BASE_URL;
 
   let doctors = await fetch(
     apiUrl +
@@ -67,7 +66,7 @@ export async function loader({ request }) {
     }
   ).then((res) => res.json());
 
-  return { locale, doctors, services, blogs, ENV };
+  return { locale, doctors, services, blogs, WEB_CMS_BASE_URL };
 }
 
 export default function MainPage() {

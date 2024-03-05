@@ -1,9 +1,10 @@
 import React from "react";
 import { Card, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useLoaderData } from "@remix-run/react";
 
 export function DentistCard({ name, title, image, description, slug }) {
+  let { WEB_CMS_BASE_URL } = useLoaderData();
   let navigate = useNavigate();
   return (
     <Card
@@ -16,7 +17,7 @@ export function DentistCard({ name, title, image, description, slug }) {
       <Image
         alt="Woman listing to music"
         className="object-cover"
-        src={"http://cms.clinicamberd.com" + image}
+        src={ WEB_CMS_BASE_URL + image}
       />
       <CardFooter className="flex flex-col bg-black/10 shadow-small absolute bottom-0 z-10 p-1">
         <p className="text-tiny font-semibold text-white/80 mb-1">{name}</p>
