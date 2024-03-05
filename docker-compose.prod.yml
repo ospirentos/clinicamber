@@ -78,6 +78,8 @@ services:
     volumes:
       - /etc/letsencrypt/live/clinicamber.com/fullchain.pem:/etc/nginx/ssl/fullchain.pem
       - /etc/letsencrypt/live/clinicamber.com/privkey.pem:/etc/nginx/ssl/privkey.pem
+      - /etc/letsencrypt/live/cms.clinicamber.com/fullchain.pem:/etc/nginx/ssl/cms_fullchain.pem
+      - /etc/letsencrypt/live/cms.clinicamber.com/privkey.pem:/etc/nginx/ssl/cms_privkey.pem
   web-app:
     container_name: amber-web-app
     restart: unless-stopped
