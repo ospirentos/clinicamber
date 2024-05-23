@@ -25,4 +25,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: docker compose -f /home/ospirentos/clinicamber/docker-compose.prod.yml up -d --build
+          script: docker compose down && docker compose -f /home/ospirentos/clinicamber/docker-compose.prod.yml up -d --build
