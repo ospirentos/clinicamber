@@ -7,6 +7,7 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import { getInitialNamespaces } from "remix-i18next";
+import { renderGoogleMaps } from "./vendor/google-maps";
 
 async function hydrate() {
   await i18next
@@ -48,3 +49,5 @@ if (window.requestIdleCallback) {
   // https://caniuse.com/requestidlecallback
   window.setTimeout(hydrate, 1);
 }
+
+renderGoogleMaps(window.ENV.GOOGLE_API_KEY);

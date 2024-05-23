@@ -31,7 +31,9 @@ import { FooterInstagramIcon } from "./images/FooterInstagramIcon";
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
 
-  return { locale };
+  let ENV = {GOOGLE_API_KEY: process.env.GOOGLE_API_KEY}
+
+  return { locale, ENV };
 }
 
 export const links = () => [{ rel: "stylesheet", href: stylesheet }];
@@ -47,7 +49,8 @@ export const meta = () => [
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(true);
 
-  let { locale } = useLoaderData();
+  let { locale, ENV } = useLoaderData();
+
   let { i18n, t } = useTranslation();
 
   useChangeLanguage(locale);
@@ -198,9 +201,14 @@ export default function App() {
               </div>
               <div className="flex gap-4 flex-col sm:flex-row w-full max-w-[1024px] mx-6 py-4 border-t border-amber-400 justify-between items-center">
                 <div>Kişisel Veri İzleme Politikası</div>
-                <div>Copyright © 2023 Clinic Amber | Tüm hakları saklıdır</div>
+                <div>Copyright © 2024 Clinic Amber | Tüm hakları saklıdır</div>
               </div>
             </footer>
+            <script
+            dangerouslySetInnerHTML={{
+              __html: `window.ENV = ${JSON.stringify(ENV)}`,
+            }}
+            />
             <Scripts />
             <LiveReload port={3001}/>
           </div>
