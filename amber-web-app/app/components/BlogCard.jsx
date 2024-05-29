@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, CardHeader } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
-
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useLoaderData } from "@remix-run/react";
 
 export function BlogCard({ firstTitle, secondTitle, image, slug }) {
+  let { WEB_CMS_BASE_URL } = useLoaderData();
   let navigate = useNavigate();
   return (
     <Card
@@ -22,7 +22,7 @@ export function BlogCard({ firstTitle, secondTitle, image, slug }) {
         removeWrapper
         alt="Card background"
         className="z-0 w-full h-full object-cover"
-        src={"http://cms.clinicamberd.com" + image}
+        src={WEB_CMS_BASE_URL + image}
       />
     </Card>
   );

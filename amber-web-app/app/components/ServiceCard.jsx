@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, CardHeader, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
-import { Button } from "@nextui-org/button";
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useLoaderData } from "@remix-run/react";
 
 export function ServiceCard({ title, shortText, image, slug }) {
+  let { WEB_CMS_BASE_URL } = useLoaderData();
   let navigate = useNavigate();
 
   return (
@@ -21,7 +21,7 @@ export function ServiceCard({ title, shortText, image, slug }) {
         removeWrapper
         alt="Card background"
         className="z-0 w-full h-full object-cover"
-        src={"http://cms.clinicamberd.com" + image}
+        src={WEB_CMS_BASE_URL + image}
       />
       <CardFooter className="justify-center sm:justify-between bg-black/40 before:bg-white/10 border-white/20 overflow-hidden absolute bottom-0 w-full z-10">
         <p className="hidden sm:block sm:text-tiny sm:text-white/80">
