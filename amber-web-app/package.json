@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@googlemaps/js-api-loader": "^1.16.2",
     "@nextui-org/accordion": "^2.0.28",
     "@nextui-org/button": "^2.0.26",
     "@nextui-org/card": "^2.0.24",
@@ -20,6 +19,7 @@
     "@nextui-org/navbar": "^2.0.27",
     "@nextui-org/system": "^2.0.15",
     "@nextui-org/theme": "^2.1.17",
+    "@react-google-maps/api": "^2.19.3",
     "@remix-run/node": "^2.0.0",
     "@remix-run/react": "^2.0.0",
     "@remix-run/serve": "^2.0.0",
