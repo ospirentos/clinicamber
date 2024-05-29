@@ -26,17 +26,20 @@ export const loader = async ({ params, request }) => {
       }),
     }
   ).then((res) => res.json());
-  return { service };
+
+  const WEB_CMS_BASE_URL = process.env.WEB_CMS_BASE_URL;
+
+  return { service, WEB_CMS_BASE_URL };
 };
 
 export default function Service() {
-  const { service } = useLoaderData();
+  const { service, WEB_CMS_BASE_URL } = useLoaderData();
 
   return (
     <>
       <img
         src={
-          "http://cms.clinicamberd.com" +
+          WEB_CMS_BASE_URL +
           service.data[0]?.attributes.image.data.attributes.url
         }
         alt={service.data[0]?.attributes.image.data.attributes.alternativeText}

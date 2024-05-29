@@ -23,19 +23,23 @@ export const loader = async ({ params, request }) => {
       }),
     }
   ).then((res) => res.json());
-  return { blog };
+
+  const WEB_CMS_BASE_URL = process.env.WEB_CMS_BASE_URL;
+  
+  return { blog, WEB_CMS_BASE_URL };
 };
 
 export default function Blog() {
-  const { blog } = useLoaderData();
+  const { blog, WEB_CMS_BASE_URL } = useLoaderData();
 
   console.log("Blog is: ", blog);
+  console.log("CMS URL is: ", WEB_CMS_BASE_URL);
 
   return (
     <>
       <img
         src={
-          "http://cms.clinicamberd.com" +
+          WEB_CMS_BASE_URL +
           blog.data[0]?.attributes.image.data.attributes.url
         }
         alt={blog.data[0]?.attributes.image.data.attributes.alternativeText}

@@ -23,11 +23,14 @@ export const loader = async ({ params, request }) => {
       }),
     }
   ).then((res) => res.json());
-  return { doctor };
+
+  const WEB_CMS_BASE_URL = process.env.WEB_CMS_BASE_URL;
+
+  return { doctor, WEB_CMS_BASE_URL };
 };
 
 export default function Doctor() {
-  const { doctor } = useLoaderData();
+  const { doctor, WEB_CMS_BASE_URL } = useLoaderData();
 
   return (
     <>
@@ -35,7 +38,7 @@ export default function Doctor() {
         <img
           className="col-span-8 justify-self-center w-80"
           src={
-            "http://cms.clinicamberd.com" +
+            WEB_CMS_BASE_URL +
             doctor.data[0]?.attributes.image.data.attributes.url
           }
           alt={doctor.data[0]?.attributes.image.data.attributes.alternativeText}
