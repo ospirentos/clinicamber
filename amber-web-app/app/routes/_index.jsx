@@ -1,6 +1,5 @@
 import React from "react";
 import { useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
 
 import { SectionTitle } from "../components/SectionTitle";
 import { DentistCard } from "../components/DentistCard";
@@ -9,7 +8,7 @@ import { BlogCard } from "../components/BlogCard";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
 import i18next from "../i18next.server";
-import { GoogleMap } from "../components/GoogleMap";
+import { Map } from "../components/GoogleMap";
 import { WhatsAppFloatingButton } from "../images/WhatsAppFloatingButton";
 import banner from "../images/banner_1.jpg";
 
@@ -18,6 +17,7 @@ export async function loader({ request }) {
   const apiUrl = process.env.API_URL;
   const publicToken = process.env.PUBLIC_WEB_TOKEN;
   const WEB_CMS_BASE_URL = process.env.WEB_CMS_BASE_URL;
+  const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
   let doctors = await fetch(
     apiUrl +
@@ -66,7 +66,7 @@ export async function loader({ request }) {
     }
   ).then((res) => res.json());
 
-  return { locale, doctors, services, blogs, WEB_CMS_BASE_URL };
+  return { locale, doctors, services, blogs, WEB_CMS_BASE_URL, GOOGLE_API_KEY };
 }
 
 export default function MainPage() {
@@ -136,7 +136,7 @@ export default function MainPage() {
                 <br />
                 Pendik/İstanbul
               </p>
-              <GoogleMap />
+              <Map />
             </div>
             <div className="w-full sm:w-1/3">
               <h2 className="text-xl">Bize Ulaşın</h2>
