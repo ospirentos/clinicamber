@@ -1,6 +1,9 @@
 {
   "bannerTitle": "Ağız ve Diş Sağlığı Polikliniği",
-  "bannerSideText": "Herkes güzel bir gülüşü hak eder",
+  "bannerSideText": "Hak Ettiğiniz Gülüşe Kavuşun",
+  "bannerDescriptionText": "Sahip olduğumuz uzman hekim kadromuz ve son teknoloji aletlerimiz ile sizlere sağlıklı gülüşler verebilmek için çalışıyoruz. Hemen randevu oluşturun",
+  "bannerButtonAppoint": "Randevu Oluştur",
+  "bannerButtonContactUs": "Bize Ulaşın",
   "home": "Anasayfa",
   "services": "Hizmetler",
   "doctors": "Doktorlarımız",

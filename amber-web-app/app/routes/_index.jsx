@@ -7,10 +7,11 @@ import { ServiceCard } from "../components/ServiceCard";
 import { BlogCard } from "../components/BlogCard";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
+import { Button } from "@nextui-org/button";
 import i18next from "../i18next.server";
 import { Map } from "../components/GoogleMap";
 import { WhatsAppFloatingButton } from "../images/WhatsAppFloatingButton";
-import banner from "../images/banner_1.jpg";
+import banner from "../images/main-bg-darker.png";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
@@ -78,14 +79,27 @@ export default function MainPage() {
 
   return (
     <>
-      <div className="relative text-center lg:h-[600px] overflow-hidden">
+      <div className="relative text-center overflow-hidden max-w-[1080px] m-auto">
         <img
           src={banner}
-          alt="smiling women hugging dentist chair"
-          className="w-full"
+          alt="three pictures of clinic amber"
+          className="w-[1080px]"
         />
-        <div className="font-vollkorn italic mt-4  sm:absolute sm:top-24 sm:left-8 sm:text-2xl md:text-2xl lg:text-4xl lg:left-[10%]">
-          {t("bannerSideText")}
+        <div className="mx-auto sm:absolute top-[calc(50%-144px)] left-16 max-w-[400px]">
+          <div className="font-vollkorn italic mt-4 text-amber-500 sm:text-4xl">
+            "{t("bannerSideText")}"
+          </div>
+          <div className="hidden sm:block font-vollkorn italic mt-2 text-white text-xl">
+            {t("bannerDescriptionText")}
+          </div>
+          <div className="flex justify-around max-w-[360px] mx-auto my-4">
+            <Button className="bg-amber-500 text-white">
+              {t("bannerButtonAppoint")}
+            </Button>
+            <Button className="bg-white text-amber-500 border border-amber-500 ">
+              {t("bannerButtonContactUs")}
+            </Button>
+          </div>
         </div>
       </div>
       <div className="flex items-center w-full h-auto justify-center">
