@@ -31,7 +31,7 @@ import { FooterInstagramIcon } from "./images/FooterInstagramIcon";
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
 
-  let ENV = {GOOGLE_API_KEY: process.env.GOOGLE_API_KEY}
+  let ENV = { GOOGLE_API_KEY: process.env.GOOGLE_API_KEY };
 
   return { locale, ENV };
 }
@@ -102,7 +102,7 @@ export default function App() {
                     <div className="text-amber-500 font-semibold text-lg leading-3">
                       Amber
                     </div>
-                    <span className="text-amber-500 text-base">
+                    <span className="text-amber-500 text-sm sm:text-base">
                       {t("bannerTitle")}
                     </span>
                   </span>
@@ -205,12 +205,12 @@ export default function App() {
               </div>
             </footer>
             <script
-            dangerouslySetInnerHTML={{
-              __html: `window.ENV = ${JSON.stringify(ENV)}`,
-            }}
+              dangerouslySetInnerHTML={{
+                __html: `window.ENV = ${JSON.stringify(ENV)}`,
+              }}
             />
             <Scripts />
-            <LiveReload port={3001}/>
+            <LiveReload port={3001} />
           </div>
         </NextUIProvider>
       </body>
