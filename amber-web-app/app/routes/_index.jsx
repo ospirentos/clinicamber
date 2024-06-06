@@ -157,14 +157,14 @@ export default function MainPage() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="z-20 fixed right-4 bottom-6 sm:right-6 sm:top-20">
-        <a
-          className=""
-          href="https://wa.me/905437622003?text=I'm%20interested%20in%20your%20car%20for%20sale"
-        >
-          <WhatsAppFloatingButton />
-        </a>
+        <div className="z-20 fixed right-4 bottom-6 lg:right-[calc(50%-512px)] sm:top-20">
+          <a
+            className=""
+            href="https://wa.me/905437622003?text=I'm%20interested%20in%20your%20car%20for%20sale"
+          >
+            <WhatsAppFloatingButton />
+          </a>
+        </div>
       </div>
     </>
   );
