@@ -17,7 +17,7 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v1
       - name: Send Files
-        run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ospirentos/clinicamber/
+        run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/clinicamber/
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -25,4 +25,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: docker compose -f /home/ospirentos/clinicamber/docker-compose.prod.yml down && docker compose -f /home/ospirentos/clinicamber/docker-compose.prod.yml up -d --build
+          script: docker compose -f /home/${{ secrets.SSH_USER }}/clinicamber/docker-compose.prod.yml down && docker compose -f /home/${{ secrets.SSH_USER }}/clinicamber/docker-compose.prod.yml up -d --build
