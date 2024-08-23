@@ -25,7 +25,7 @@ services:
       - ./amber-cms/package-lock.json:/opt/package-lock.json
 
       - ./.env:/opt/app/.env
-      - ./amber-cms/public/uploads:/opt/app/public/uploads
+      - ./amber-cms/public/uploads:/opt/app/public/uploads:z
     ports:
       - "1337:1337"
     networks:
