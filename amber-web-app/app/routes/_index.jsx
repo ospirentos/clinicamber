@@ -19,6 +19,7 @@ export async function loader({ request }) {
   const publicToken = process.env.PUBLIC_WEB_TOKEN;
   const WEB_CMS_BASE_URL = process.env.WEB_CMS_BASE_URL;
   const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  const GOOGLE_API_KEY_SSR = process.env.GOOGLE_API_KEY_SSR;
   const GOOGLE_PLACE_ID = process.env.GOOGLE_PLACE_ID;
 
   let doctors = await fetch(
@@ -74,7 +75,7 @@ export async function loader({ request }) {
         fields: "reviews",
         reviews_no_translations: true,
         place_id: GOOGLE_PLACE_ID,
-        key: GOOGLE_API_KEY,
+        key: GOOGLE_API_KEY_SSR,
       })
   ).then((res) => res.json());
 
