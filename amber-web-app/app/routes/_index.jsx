@@ -1,6 +1,5 @@
 import React from "react";
 import { useLoaderData } from "@remix-run/react";
-
 import { SectionTitle } from "../components/SectionTitle";
 import { DentistCard } from "../components/DentistCard";
 import { ServiceCard } from "../components/ServiceCard";
@@ -12,6 +11,7 @@ import i18next from "../i18next.server";
 import { Map } from "../components/GoogleMap";
 import { WhatsAppFloatingButton } from "../images/WhatsAppFloatingButton";
 import banner from "../images/main-bg-darker.png";
+import { GoogleReview } from "../components/GoogleReview";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
@@ -19,6 +19,7 @@ export async function loader({ request }) {
   const publicToken = process.env.PUBLIC_WEB_TOKEN;
   const WEB_CMS_BASE_URL = process.env.WEB_CMS_BASE_URL;
   const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  const GOOGLE_PLACE_ID = process.env.GOOGLE_PLACE_ID;
 
   let doctors = await fetch(
     apiUrl +
@@ -67,11 +68,29 @@ export async function loader({ request }) {
     }
   ).then((res) => res.json());
 
-  return { locale, doctors, services, blogs, WEB_CMS_BASE_URL, GOOGLE_API_KEY };
+  let googleReviews = await fetch(
+    "https://maps.googleapis.com/maps/api/place/details/json?" +
+      new URLSearchParams({
+        fields: "reviews",
+        reviews_no_translations: true,
+        place_id: GOOGLE_PLACE_ID,
+        key: GOOGLE_API_KEY,
+      })
+  ).then((res) => res.json());
+
+  return {
+    locale,
+    doctors,
+    services,
+    blogs,
+    WEB_CMS_BASE_URL,
+    GOOGLE_API_KEY,
+    googleReviews,
+  };
 }
 
 export default function MainPage() {
-  let { locale, doctors, services, blogs } = useLoaderData();
+  let { locale, doctors, services, blogs, googleReviews } = useLoaderData();
 
   let { t } = useTranslation();
 
@@ -138,6 +157,12 @@ export default function MainPage() {
                 secondTitle={blog.attributes.secondTitle}
                 slug={blog.attributes.slug}
               />
+            ))}
+          </div>
+          <SectionTitle title={t("Google")} />
+          <div className="flex gap-4 overflow-x-auto px-4 amber-scroll">
+            {googleReviews.result?.reviews.map((review, index) => (
+              <GoogleReview key={index} reviewData={review} />
             ))}
           </div>
           <SectionTitle title={t("contact")} />

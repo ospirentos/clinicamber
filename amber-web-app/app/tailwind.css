@@ -4,3 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+
+/* width */
+.amber-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+
+/* Track */
+.amber-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.amber-scroll::-webkit-scrollbar-thumb {
+  background: rgb(251 191 36);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+.amber-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgb(217 119 6);
+}

@@ -89,6 +89,7 @@ services:
       - API_URL=${WEB_API_URL}
       - PUBLIC_WEB_TOKEN=${WEB_PUBLIC_TOKEN}
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - GOOGLE_PLACE_ID=${GOOGLE_PLACE_ID}
       - NODE_ENV=development
       - PORT=3000
       - WATCHPACK_POLLING=true
