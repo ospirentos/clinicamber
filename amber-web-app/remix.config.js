@@ -4,8 +4,7 @@ export default {
   serverDependenciesToBundle: [
     "remix-i18next",
     "accept-language-parser",
-    "@googlemaps/js-api-loader",
-    "node-cache"
+    "@googlemaps/js-api-loader"
   ],
   serverModuleFormat: "esm",
   serverPlatform: "node"
