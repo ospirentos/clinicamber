@@ -1,5 +1,6 @@
 import React from "react";
 import { useLoaderData } from "@remix-run/react";
+import { redirect } from "@remix-run/node";
 import { SectionTitle } from "../components/SectionTitle";
 import { DentistCard } from "../components/DentistCard";
 import { ServiceCard } from "../components/ServiceCard";
@@ -12,6 +13,8 @@ import { Map } from "../components/GoogleMap";
 import { WhatsAppFloatingButton } from "../images/WhatsAppFloatingButton";
 import banner from "../images/main-bg-darker.png";
 import { GoogleReview } from "../components/GoogleReview";
+import { ContactUsForm } from "../components/ContactUsForm";
+import GoogleContentCache from "../cache.server";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
@@ -21,6 +24,23 @@ export async function loader({ request }) {
   const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
   const GOOGLE_API_KEY_SSR = process.env.GOOGLE_API_KEY_SSR;
   const GOOGLE_PLACE_ID = process.env.GOOGLE_PLACE_ID;
+
+  if (GoogleContentCache.has('google-place-data')) {
+    console.log('Cache hit, using data', GoogleContentCache.get('google-place-data'));
+  } else {
+    console.log('Cache miss, Saving google places data to cache');
+    let googleReviews = await fetch(
+      "https://maps.googleapis.com/maps/api/place/details/json?" +
+        new URLSearchParams({
+          fields: "reviews",
+          reviews_no_translations: true,
+          place_id: GOOGLE_PLACE_ID,
+          key: GOOGLE_API_KEY_SSR,
+        })
+    ).then((res) => res.json());
+    GoogleContentCache.set('google-place-data', googleReviews, 86400);
+  }
+
 
   let doctors = await fetch(
     apiUrl +
@@ -69,16 +89,6 @@ export async function loader({ request }) {
     }
   ).then((res) => res.json());
 
-  let googleReviews = await fetch(
-    "https://maps.googleapis.com/maps/api/place/details/json?" +
-      new URLSearchParams({
-        fields: "reviews",
-        reviews_no_translations: true,
-        place_id: GOOGLE_PLACE_ID,
-        key: GOOGLE_API_KEY_SSR,
-      })
-  ).then((res) => res.json());
-
   return {
     locale,
     doctors,
@@ -86,8 +96,17 @@ export async function loader({ request }) {
     blogs,
     WEB_CMS_BASE_URL,
     GOOGLE_API_KEY,
-    googleReviews,
+    googleReviews: GoogleContentCache.get('google-place-data'),
   };
+}
+
+export async function action({ request }) {
+  // Get the form data from the request
+  const body = await request.formData();
+  const extractedFormData = Object.fromEntries(body.entries());
+  console.log(extractedFormData);
+
+  return redirect('/');
 }
 
 export default function MainPage() {
@@ -148,7 +167,8 @@ export default function MainPage() {
               />
             ))}
           </div>
-          <SectionTitle title={t("blog")} />
+          <div className="mb-4" id="blog"></div>
+          <SectionTitle title={t("blog")}/>
           <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-auto px-8">
             {blogs.data.map((blog, index) => (
               <BlogCard
@@ -162,12 +182,13 @@ export default function MainPage() {
           </div>
           <SectionTitle title={t("Google")} />
           <div className="flex gap-4 overflow-x-auto px-4 amber-scroll">
-            {googleReviews.result?.reviews.map((review, index) => (
+            {googleReviews.result?.reviews.map((review, index) => ( 
+              review.author_name !== 'Fatih M. (learstyleR)' &&
               <GoogleReview key={index} reviewData={review} />
             ))}
           </div>
           <SectionTitle title={t("contact")} />
-          <div className="flex gap-4 flex-wrap">
+          <div className="flex gap-8 flex-wrap">
             <div className="w-full sm:w-1/2">
               <h2 className="text-xl">Adres</h2>
               <p className="my-4">
@@ -178,14 +199,15 @@ export default function MainPage() {
               </p>
               <Map />
             </div>
-            <div className="w-full sm:w-1/3">
+            <div className="w-full sm:w-2/5 sm:flex-auto" id="contactUs">
               <h2 className="text-xl">Bize Ulaşın</h2>
+              <div className="flex justify-center flex-col"><ContactUsForm /></div>
             </div>
           </div>
         </div>
-        <div className="z-20 fixed right-4 bottom-6 lg:right-[calc(50%-512px)] sm:top-20">
+        <div className="z-20 fixed right-4 bottom-6 lg:right-[calc(50%-512px)] sm:top-20 pointer-events-none">
           <a
-            className=""
+            className="pointer-events-auto"
             href="https://wa.me/905437622003?text=I'm%20interested%20in%20your%20car%20for%20sale"
           >
             <WhatsAppFloatingButton />

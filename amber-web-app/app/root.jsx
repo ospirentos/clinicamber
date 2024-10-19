@@ -74,12 +74,12 @@ export default function App() {
     },
     {
       text: "contact",
-      link: "/",
+      link: "/contactus",
     },
   ];
 
   return (
-    <html lang={locale} dir={i18n.dir()}>
+    <html lang={locale} dir={i18n.dir()} className="scroll-smooth">
       <head>
         <link rel="icon" href="data:image/x-icon;base64,AA" />
         <Meta />
@@ -134,10 +134,9 @@ export default function App() {
                   <Link href="#">{t("blog")}</Link>
                 </NavbarItem>
                 <NavbarItem
-                  href="/contact"
                   className="hover:text-amber-500 transition"
                 >
-                  <Link href="#">{t("contact")}</Link>
+                  <Link to="/contactus">{t("contact")}</Link>
                 </NavbarItem>
               </NavbarContent>
               <NavbarMenu>
@@ -152,7 +151,7 @@ export default function App() {
                             : "foreground"
                       }
                       className="w-full"
-                      href="#"
+                      to={item.link}
                       size="lg"
                     >
                       {t(item.text)}

@@ -5,6 +5,7 @@ export default {
     "remix-i18next",
     "accept-language-parser",
     "@googlemaps/js-api-loader",
+    "node-cache"
   ],
   serverModuleFormat: "esm",
   serverPlatform: "node"

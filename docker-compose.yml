@@ -1,5 +1,3 @@
-version: "3.5"
-
 services:
   amber-cms-app:
     container_name: amber-cms
@@ -99,6 +97,7 @@ services:
       - WDS_SOCKET_PORT=3000
     volumes:
       - ./amber-web-app/app/:/home/node/app/app/
+      - ./amber-web-app/public/:/home/node/app/public/
 volumes:
   amber-cms-data:
   static-web-files:

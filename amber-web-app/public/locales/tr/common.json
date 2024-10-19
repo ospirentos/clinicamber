@@ -8,5 +8,9 @@
   "services": "Hizmetler",
   "doctors": "Doktorlarımız",
   "blog": "Blog",
-  "contact": "İletişim"
+  "contact": "İletişim",
+  "formSubmitSuccess": "Form başarıyla gönderildi",
+  "nameSurname": "Ad Soyad",
+  "email": "E-Posta",
+  "message": "Mesajınız"
 }

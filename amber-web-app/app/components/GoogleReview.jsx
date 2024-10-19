@@ -2,7 +2,7 @@ import React from "react";
 
 export function GoogleReview({ reviewData }) {
   const { author_name, rating, text } = reviewData;
-
+  
   return (
     <div className="flex flex-col items-center shadow-md min-w-[280px] sm:min-w-[450px] my-4 p-4">
       <div className="flex mx-auto my-4">

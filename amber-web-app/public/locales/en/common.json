@@ -5,5 +5,9 @@
   "services": "Services",
   "doctors": "Doctors",
   "blog": "Blog",
-  "contact": "Contact"
+  "contact": "Contact",
+  "formSubmitSuccess": "Form submitted successfully",
+  "nameSurname": "Name Surname",
+  "email": "E-Mail",
+  "message": "Your Message"
 }
