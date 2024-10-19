@@ -3,13 +3,12 @@ import { Form, useNavigation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import {
     Modal, 
-    ModalContent, 
-    ModalHeader, 
-    ModalBody, 
-    ModalFooter,
-  } from "@nextui-org/modal";
+    ModalContent,
+    ModalBody,
+    Input, 
+    Textarea
+  } from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
-import {Input, Textarea} from "@nextui-org/react";
 
 export function ContactUsForm() {
     const [isModalOpen, setIsModalOpen] = useState(false);

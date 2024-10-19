@@ -9,6 +9,7 @@ export default {
     "./node_modules/@nextui-org/theme/dist/components/button.js",
     "./node_modules/@nextui-org/theme/dist/components/accordion.js",
     "./node_modules/@nextui-org/theme/dist/components/input.js",
+    "./node_modules/@nextui-org/theme/dist/components/modal.js",
     "./app/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
