@@ -9,5 +9,9 @@
   "formSubmitSuccess": "Form submitted successfully",
   "nameSurname": "Name Surname",
   "email": "E-Mail",
-  "message": "Your Message"
+  "message": "Your Message",
+  "addressTitle": "Address",
+  "addressLine1": "Orhangazi, Esenyalı Orhangazi Mah, Alparslan Türkeş Cd No:2/A.",
+  "addressLine2": "Pendik/İstanbul",
+  "contactUsTitle": "Contact Us"
 }
