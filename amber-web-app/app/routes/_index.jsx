@@ -208,7 +208,7 @@ export default function MainPage() {
         <div className="z-20 fixed right-4 bottom-6 lg:right-[calc(50%-512px)] sm:top-20 pointer-events-none">
           <a
             className="pointer-events-auto"
-            href={t("whatsappLink", "https://wa.me/905437622003?text=I'm%20interested%20in%20your%20car%20for%20sale")}
+            href={t("whatsappLink", "https://wa.me/905527138204")}
           >
             <WhatsAppFloatingButton />
           </a>
