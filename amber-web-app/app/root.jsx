@@ -7,6 +7,7 @@ import {
   Scripts,
   LiveReload,
   useLoaderData,
+  ScrollRestoration
 } from "@remix-run/react";
 import { NextUIProvider } from "@nextui-org/system";
 import {
@@ -203,7 +204,7 @@ export default function App() {
                 </div>
               </div>
               <div className="flex gap-4 flex-col sm:flex-row w-full max-w-[1024px] mx-6 py-4 border-t border-amber-400 justify-between items-center">
-                <div>Kişisel Veri İzleme Politikası</div>
+                <div className="hover:text-amber-500 transition"><Link to="/kvkk">Kişisel Veri İzleme Politikası</Link></div>
                 <div>Copyright © 2024 Clinic Amber | Tüm hakları saklıdır</div>
               </div>
             </footer>
@@ -212,6 +213,7 @@ export default function App() {
                 __html: `window.ENV = ${JSON.stringify(ENV)}`,
               }}
             />
+            <ScrollRestoration />
             <Scripts />
             <LiveReload port={3001} />
           </div>
