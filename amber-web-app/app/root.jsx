@@ -47,6 +47,21 @@ export const meta = () => [
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(true);
 
+  React.useEffect(() => {
+    const scriptGTagUrl = document.createElement('script');
+    const scriptGTagCode = document.createElement('script');
+    scriptGTagUrl.src = "https://www.googletagmanager.com/gtag/js?id=AW-16765335204";
+    scriptGTagCode.innerHTML = `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-16765335204');
+            `;
+    document.head.appendChild(scriptGTagUrl);
+    document.head.appendChild(scriptGTagCode);
+  }, [])
+
   let { locale, ENV } = useLoaderData();
 
   let { i18n, t } = useTranslation();
