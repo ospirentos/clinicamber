@@ -107,19 +107,21 @@ export default function App() {
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   className="sm:hidden"
                 />
-                <NavbarBrand href="/">
-                  <div style={{ width: "90px" }}>
-                    <AmberLogo />
-                  </div>
-                  <span>
-                    <div className="text-amber-500 font-semibold text-lg leading-3">
-                      Amber
-                    </div>
-                    <span className="text-amber-500 text-sm sm:text-base">
-                      {t("bannerTitle")}
-                    </span>
-                  </span>
-                </NavbarBrand>
+                <Link href="/">
+                  <NavbarBrand>
+                      <div style={{ width: "90px" }}>
+                        <AmberLogo />
+                      </div>
+                      <span>
+                        <div className="text-amber-500 font-semibold text-lg leading-3">
+                          Amber
+                        </div>
+                        <span className="text-amber-500 text-sm sm:text-base">
+                          {t("bannerTitle")}
+                        </span>
+                      </span>
+                  </NavbarBrand>
+                </Link>
               </NavbarContent>
               <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem
