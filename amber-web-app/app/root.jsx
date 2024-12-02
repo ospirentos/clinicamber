@@ -34,7 +34,13 @@ export async function loader({ request }) {
   return { locale, ENV };
 }
 
-export const links = () => [{ rel: "stylesheet", href: stylesheet }];
+export const links = () => [
+  { rel: "stylesheet", href: stylesheet },
+  { rel: "apple-touch-icon", sizes:"180x180", href: "/apple-touch-icon.png" },
+  { rel: "icon", type: "image/png", sizes:"32x32", href: "/favicon-32x32.png" },
+  { rel: "icon", type: "image/png", sizes:"16x16", href: "/favicon-16x16.png" },
+  { rel: "manifest", href: "/site.webmanifest" },
+];
 
 export const meta = () => [
   {
@@ -50,6 +56,7 @@ export default function App() {
   React.useEffect(() => {
     const scriptGTagUrl = document.createElement('script');
     const scriptGTagCode = document.createElement('script');
+    const scriptSiteName = document.createElement('script');
     scriptGTagUrl.src = "https://www.googletagmanager.com/gtag/js?id=AW-16765335204";
     scriptGTagCode.innerHTML = `
             window.dataLayer = window.dataLayer || [];
@@ -58,6 +65,15 @@ export default function App() {
 
             gtag('config', 'AW-16765335204');
             `;
+    scriptSiteName.innerHTML = `
+      {
+        "@context" : "https://schema.org",
+        "@type" : "WebSite",
+        "name" : "Amber Ağız ve Diş Sağlığı Polikliniği",
+        "url" : "https://clinicamber.com/"
+      }`;
+    scriptSiteName.type = "application/ld+json";
+    document.head.appendChild(scriptSiteName);
     document.head.appendChild(scriptGTagUrl);
     document.head.appendChild(scriptGTagCode);
   }, [])
@@ -94,6 +110,7 @@ export default function App() {
   return (
     <html lang={locale} dir={i18n.dir()} className="scroll-smooth">
       <head>
+        <title>Amber Ağız ve Diş Sağlığı Polikliniği</title>
         <link rel="icon" href="data:image/x-icon;base64,AA" />
         <Meta />
         <Links />
