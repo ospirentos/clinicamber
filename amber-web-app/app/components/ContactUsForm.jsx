@@ -33,7 +33,7 @@ export function ContactUsForm() {
                     <Input type="text" label={t("nameSurname")} id="name" name="name" isRequired required />
                 </div>
                 <div className="my-6">
-                    <Input type="email" label={t("email")} name="email" isRequired required />
+                    <Input type="tel" label={t("phone")} name="tel" isRequired required />
                 </div>
                 <div className="my-6">
                     <Textarea
@@ -45,7 +45,7 @@ export function ContactUsForm() {
                     />
                 </div>
                 <div className="my-6 flex justify-center">
-                    <Button className="bg-amber-500 text-white" type="submit">Gönder</Button>
+                    <Button className="bg-green-500 text-white" type="submit">Whatsapp'tan Gönder</Button>
                 </div>
             </Form>
             <Modal

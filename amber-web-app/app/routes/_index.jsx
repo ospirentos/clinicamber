@@ -101,19 +101,17 @@ export async function loader({ request }) {
 }
 
 export async function action({ request }) {
-  // Get the form data from the request
   const body = await request.formData();
   const extractedFormData = Object.fromEntries(body.entries());
-  console.log(extractedFormData);
+  const message = `*İsim Soyisim:* ${extractedFormData.name}\n*Telefon Numarası:* ${extractedFormData.tel}\n*Mesajım:*\n${extractedFormData.message}\n`;
+  const redirectUrl = `https://wa.me/905527138204?text=${encodeURIComponent(message)}`;
 
-  return redirect('/');
+  return redirect(redirectUrl);
 }
 
 export default function MainPage() {
   let { locale, doctors, services, blogs, googleReviews } = useLoaderData();
-
   let { t } = useTranslation();
-
   useChangeLanguage(locale);
 
   return (
