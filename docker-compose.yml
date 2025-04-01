@@ -98,6 +98,8 @@ services:
     volumes:
       - ./amber-web-app/app/:/home/node/app/app/
       - ./amber-web-app/public/:/home/node/app/public/
+      - ./amber-web-app/package.json:/home/node/app/package.json
+      - ./amber-web-app/package-lock.json:/home/node/app/package-lock.json
 volumes:
   amber-cms-data:
   static-web-files:
