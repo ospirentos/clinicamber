@@ -15,6 +15,8 @@ import banner from "../images/main-bg-darker.png";
 import { GoogleReview } from "../components/GoogleReview";
 import { ContactUsForm } from "../components/ContactUsForm";
 import GoogleContentCache from "../cache.server";
+import InstaFeedItem from "../components/InstaFeedItem";
+import InstagramLogo from "../images/instagram-logo-modified.svg";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
@@ -141,6 +143,19 @@ export default function MainPage() {
       </div>
       <div className="flex items-center w-full h-auto justify-center">
         <div className="px-6 w-full max-w-[1024px]">
+          <SectionTitle icon={InstagramLogo} />
+          <div className="flex flex-wrap gap-6 justify-center sm:max-w-[900px] sm:gap-8 sm:grid sm:grid-cols-12 sm:grid-rows-auto px-8">
+            {[1, 2, 3, 4, 5].map((id) => (
+              <InstaFeedItem
+                key={id}
+                mediaUrl={`https://picsum.photos/300/400?random=${id}`}
+                caption={`This is a longer caption for testing purposes. It is meant to simulate a real-world scenario where captions might be descriptive and span multiple lines. Random image ${id}`}
+                permalink={`https://picsum.photos/300/400?random=${id}`}
+                likes={Math.floor(Math.random() * 1000)}
+                comments={Math.floor(Math.random() * 500)}
+              />
+            ))}
+          </div>
           <SectionTitle title={t("doctors")} />
           <div className="flex gap-4 overflow-x-auto sm:max-w-[900px] sm:gap-6 sm:grid sm:grid-cols-12 sm:grid-rows-auto px-8">
             {doctors.data.map((doctor, index) => (
