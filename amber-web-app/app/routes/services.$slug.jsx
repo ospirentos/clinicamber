@@ -1,7 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import i18next from "../i18next.server";
 import { RichTextRenderer } from "../components/RichTextRenderer";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Accordion, AccordionItem } from "@heroui/accordion";
 
 export const loader = async ({ params, request }) => {
   let locale = await i18next.getLocale(request);

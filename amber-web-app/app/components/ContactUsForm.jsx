@@ -7,8 +7,8 @@ import {
     ModalBody,
     Input, 
     Textarea
-  } from "@nextui-org/react";
-import { Button } from "@nextui-org/button";
+  } from "@heroui/react";
+import { Button } from "@heroui/button";
 
 export function ContactUsForm() {
     const [isModalOpen, setIsModalOpen] = useState(false);

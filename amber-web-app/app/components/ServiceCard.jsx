@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardHeader, CardFooter } from "@nextui-org/card";
-import { Image } from "@nextui-org/image";
+import { Card, CardHeader, CardFooter } from "@heroui/card";
+import { Image } from "@heroui/image";
 import { useNavigate, useLoaderData } from "@remix-run/react";
 
 export function ServiceCard({ title, shortText, image, slug }) {

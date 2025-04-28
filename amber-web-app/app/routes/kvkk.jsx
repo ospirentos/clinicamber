@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "@remix-run/react";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 
 const Kvkk = () => {
     const navigate = useNavigate();

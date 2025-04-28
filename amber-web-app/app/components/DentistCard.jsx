@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardFooter } from "@nextui-org/card";
-import { Image } from "@nextui-org/image";
+import { Card, CardFooter } from "@heroui/card";
+import { Image } from "@heroui/image";
 import { useNavigate, useLoaderData } from "@remix-run/react";
 
 export function DentistCard({ name, title, image, description, slug }) {

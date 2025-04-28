@@ -9,7 +9,7 @@ import {
   useLoaderData,
   ScrollRestoration
 } from "@remix-run/react";
-import { NextUIProvider } from "@nextui-org/system";
+import { HeroUIProvider } from "@heroui/system";
 import {
   Navbar,
   NavbarBrand,
@@ -18,7 +18,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-} from "@nextui-org/navbar";
+} from "@heroui/navbar";
 import stylesheet from "./tailwind.css";
 import { AmberLogo } from "./images/AmberLogo";
 import { useTranslation } from "react-i18next";
@@ -148,7 +148,7 @@ export default function App() {
         <Links />
       </head>
       <body className="font-poppins">
-        <NextUIProvider>
+        <HeroUIProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar onMenuOpenChange={setIsMenuOpen}>
               <NavbarContent>
@@ -283,7 +283,7 @@ export default function App() {
             <Scripts />
             <LiveReload port={3001} />
           </div>
-        </NextUIProvider>
+        </HeroUIProvider>
       </body>
     </html>
   );

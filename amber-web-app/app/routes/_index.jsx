@@ -7,7 +7,7 @@ import { ServiceCard } from "../components/ServiceCard";
 import { BlogCard } from "../components/BlogCard";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import i18next from "../i18next.server";
 import { Map } from "../components/GoogleMap";
 import { WhatsAppFloatingButton } from "../images/WhatsAppFloatingButton";
