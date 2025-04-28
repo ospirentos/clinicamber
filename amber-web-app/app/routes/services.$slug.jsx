@@ -54,6 +54,7 @@ export default function Service() {
             title={
               <span className="font-vollkorn text-xl">{item.question}</span>
             }
+            textValue={item.question}
           >
             {item.answer.map((answer, index) => (
               <RichTextRenderer key={index} {...answer} />
