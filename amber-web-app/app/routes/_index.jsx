@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useMatches } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import { SectionTitle } from "../components/SectionTitle";
 import { DentistCard } from "../components/DentistCard";
@@ -57,21 +57,6 @@ export async function loader({ request }) {
       }),
     }
   ).then((res) => res.json());
-  let services = await fetch(
-    apiUrl +
-      "services?" +
-      new URLSearchParams({
-        locale: locale,
-        "populate[image][fields][0]": "url",
-      }),
-    {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + publicToken,
-        "Content-Type": "application/x-www-form-urlencoded",
-      }),
-    }
-  ).then((res) => res.json());
 
   let blogs = await fetch(
     apiUrl +
@@ -92,7 +77,6 @@ export async function loader({ request }) {
   return {
     locale,
     doctors,
-    services,
     blogs,
     WEB_CMS_BASE_URL,
     GOOGLE_API_KEY,
@@ -110,7 +94,10 @@ export async function action({ request }) {
 }
 
 export default function MainPage() {
-  let { locale, doctors, services, blogs, googleReviews } = useLoaderData();
+  const matches = useMatches();
+  const rootData = matches.find((match) => match.id === "root");
+  const { locale, doctors, blogs, googleReviews } = useLoaderData();
+  const services = rootData?.data?.services;
   let { t } = useTranslation();
   useChangeLanguage(locale);
 

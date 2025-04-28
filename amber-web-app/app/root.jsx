@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Links,
   Link,
@@ -25,13 +25,33 @@ import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
 import i18next from "./i18next.server";
 import { FooterInstagramIcon } from "./images/FooterInstagramIcon";
+import { json } from "@remix-run/node";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
+  const apiUrl = process.env.API_URL;
+  const publicToken = process.env.PUBLIC_WEB_TOKEN;
+
+  // Fetch services data
+  let services = await fetch(
+    apiUrl +
+      "services?" +
+      new URLSearchParams({
+        locale: locale,
+        "populate[image][fields][0]": "url",
+      }),
+    {
+      method: "get",
+      headers: new Headers({
+        Authorization: "Bearer " + publicToken,
+        "Content-Type": "application/x-www-form-urlencoded",
+      }),
+    }
+  ).then((res) => res.json());
 
   let ENV = { GOOGLE_API_KEY: process.env.GOOGLE_API_KEY };
 
-  return { locale, ENV };
+  return json({ locale, ENV, services });
 }
 
 export const links = () => [
@@ -52,8 +72,10 @@ export const meta = () => [
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(true);
+  const { services } = useLoaderData();
+  const [serviceList, setServiceList] = React.useState(services.data);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const scriptGTagUrl = document.createElement('script');
     const scriptGTagCode = document.createElement('script');
     const scriptSiteName = document.createElement('script');
@@ -76,7 +98,17 @@ export default function App() {
     document.head.appendChild(scriptSiteName);
     document.head.appendChild(scriptGTagUrl);
     document.head.appendChild(scriptGTagCode);
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (services?.data) {
+      const mappedServices = services.data.map((service) => ({
+        title: service.attributes.title,
+        slug: service.attributes.slug,
+      }));
+      setServiceList(mappedServices);
+    }
+  }, [services]);
 
   let { locale, ENV } = useLoaderData();
 
