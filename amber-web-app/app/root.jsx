@@ -7,7 +7,8 @@ import {
   Scripts,
   LiveReload,
   useLoaderData,
-  ScrollRestoration
+  ScrollRestoration,
+  useNavigate
 } from "@remix-run/react";
 import { HeroUIProvider } from "@heroui/system";
 import {
@@ -26,6 +27,9 @@ import { useChangeLanguage } from "remix-i18next";
 import i18next from "./i18next.server";
 import { FooterInstagramIcon } from "./images/FooterInstagramIcon";
 import { json } from "@remix-run/node";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
+import { Button } from "@heroui/button";
+import { ChevronDown } from "./images/ChevronDown";
 
 export async function loader({ request }) {
   let locale = await i18next.getLocale(request);
@@ -74,6 +78,8 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(true);
   const { services } = useLoaderData();
   const [serviceList, setServiceList] = React.useState(services.data);
+  const [hover, setHover] = React.useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const scriptGTagUrl = document.createElement('script');
@@ -183,7 +189,31 @@ export default function App() {
                   href="/services"
                   className="hover:text-amber-500 transition"
                 >
-                  <Link href="#">{t("services")}</Link>
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <Button
+                        disableRipple
+                        className="p-0 bg-transparent data-[hover=true]:bg-transparent hover:text-amber-500 transition text-base"
+                        endContent={<ChevronDown fill={hover ? "rgb(245,158,11)" : "rgb(0,0,0)"} size={16} className="hover:text-amber-500" />}
+                        radius="sm"
+                        variant="light"
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                      >
+                        {t("services")}
+                      </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Dropdown list of services" items={serviceList}>
+                      {(service) => (
+                        <DropdownItem
+                          key={service.slug}
+                          onPress={() => navigate(`/services/${service.slug}`)}
+                        >
+                          {service.title}
+                        </DropdownItem>
+                      )}
+                    </DropdownMenu>
+                  </Dropdown>
                 </NavbarItem>
                 <NavbarItem
                   href="/doctors"
