@@ -71,39 +71,50 @@ services:
       - amber-cms
     ports:
       - 80:80
+  # web-app:
+  #   container_name: amber-web-app
+  #   build:
+  #     context: amber-web-app
+  #   ports:
+  #     - "3000:3000"
+  #     - "3001:3001"
+  #     - "8002:8002"
+  #   networks:
+  #     - amber-cms
+  #   env_file: .env
+  #   environment:
+  #     - WEB_CMS_BASE_URL=${WEB_CMS_BASE_URL}
+  #     - API_URL=${WEB_API_URL}
+  #     - PUBLIC_WEB_TOKEN=${WEB_PUBLIC_TOKEN}
+  #     - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+  #     - GOOGLE_API_KEY_SSR=${GOOGLE_API_KEY_SSR}
+  #     - GOOGLE_PLACE_ID=${GOOGLE_PLACE_ID}
+  #     - NODE_ENV=development
+  #     - PORT=3000
+  #     - WATCHPACK_POLLING=true
+  #     - CHOKIDAR_USEPOLLING=true
+  #     - WDS_SOCKET_HOST=127.0.0.1
+  #     - WDS_SOCKET_PORT=3000
+  #   volumes:
+  #     - ./amber-web-app/app/:/home/node/app/app/
+  #     - ./amber-web-app/public/:/home/node/app/public/
+  #     - ./amber-web-app/package.json:/home/node/app/package.json
+  #     - ./amber-web-app/package-lock.json:/home/node/app/package-lock.json
   web-app:
     container_name: amber-web-app
     build:
       context: amber-web-app
     ports:
-      - "3000:3000"
-      - "3001:3001"
-      - "8002:8002"
+      - "5173:5173"
     networks:
       - amber-cms
     env_file: .env
-    environment:
-      - WEB_CMS_BASE_URL=${WEB_CMS_BASE_URL}
-      - API_URL=${WEB_API_URL}
-      - PUBLIC_WEB_TOKEN=${WEB_PUBLIC_TOKEN}
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
-      - GOOGLE_API_KEY_SSR=${GOOGLE_API_KEY_SSR}
-      - GOOGLE_PLACE_ID=${GOOGLE_PLACE_ID}
-      - NODE_ENV=development
-      - PORT=3000
-      - WATCHPACK_POLLING=true
-      - CHOKIDAR_USEPOLLING=true
-      - WDS_SOCKET_HOST=127.0.0.1
-      - WDS_SOCKET_PORT=3000
     volumes:
-      - ./amber-web-app/app/:/home/node/app/app/
-      - ./amber-web-app/public/:/home/node/app/public/
-      - ./amber-web-app/package.json:/home/node/app/package.json
-      - ./amber-web-app/package-lock.json:/home/node/app/package-lock.json
+      - ./amber-web-app:/app
+      - /app/node_modules
 volumes:
   amber-cms-data:
   static-web-files:
-
 networks:
   amber-cms:
     name: Amber-cms
