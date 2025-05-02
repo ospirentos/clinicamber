@@ -9,8 +9,10 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@heroui/react": "^2.8.0-beta.2",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
+    "framer-motion": "^12.9.4",
     "i18next": "^25.0.2",
     "i18next-browser-languagedetector": "^8.1.0",
     "isbot": "^5.1.27",
@@ -25,7 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.1.5",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
     "vite-tsconfig-paths": "^5.1.4"

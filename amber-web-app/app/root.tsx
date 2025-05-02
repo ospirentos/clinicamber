@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import {HeroUIProvider} from "@heroui/react";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -34,9 +35,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <HeroUIProvider>
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+        </HeroUIProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
 import { useTranslation } from "react-i18next";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@heroui/react";
 
 export function Welcome() {
   const { t } = useTranslation();
@@ -24,7 +25,19 @@ export function Welcome() {
         <div className="max-w-[300px] w-full space-y-6 px-4">
           <nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
             <p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
-              {t("translatedText")}
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="bordered">Open Menu</Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="new">New file</DropdownItem>
+                <DropdownItem key="copy">Copy link</DropdownItem>
+                <DropdownItem key="edit">Edit file</DropdownItem>
+                <DropdownItem key="delete" className="text-danger" color="danger">
+                  Delete file
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
             </p>
             <ul>
               {resources.map(({ href, text, icon }) => (
