@@ -15,4 +15,5 @@ COPY . .
 EXPOSE 5173
 
 # Command to start the development server
-CMD ["npm", "run", "dev", "--", "--host"]
+# CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["sleep", "infinity"]

@@ -109,6 +109,19 @@ services:
     networks:
       - amber-cms
     env_file: .env
+    environment:
+      - WEB_CMS_BASE_URL=${WEB_CMS_BASE_URL}
+      - API_URL=${WEB_API_URL}
+      - PUBLIC_WEB_TOKEN=${WEB_PUBLIC_TOKEN}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - GOOGLE_API_KEY_SSR=${GOOGLE_API_KEY_SSR}
+      - GOOGLE_PLACE_ID=${GOOGLE_PLACE_ID}
+      - NODE_ENV=development
+      - PORT=3000
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_HOST=127.0.0.1
+      - WDS_SOCKET_PORT=3000
     volumes:
       - ./amber-web-app:/app
       - /app/node_modules
