@@ -4,7 +4,7 @@ export interface ServiceAttributes {
   title: string;
   shortText: string;
   longText: Array<{
-    type: string;
+    type: "heading" | "paragraph" | "list";
     children: Array<{
       text: string;
       type: string;
@@ -12,7 +12,7 @@ export interface ServiceAttributes {
   }>;
   slug: string;
   qaFinalizeText: Array<{
-    type: string;
+    type: "heading" | "paragraph" | "list";
     children: Array<{
       text: string;
       type: string;
@@ -27,9 +27,21 @@ export interface ServiceAttributes {
       id: number;
       attributes: {
         url: string;
+        alternativeText: string;
       };
     };
   };
+  qaList: {
+    id: number;
+    question: string;
+    answer: {
+      type: "paragraph",
+      children: {
+        text: string;
+        type: "heading" | "paragraph" | "list";
+      }[]
+    }[]
+  }[]
 }
 
 export interface Service {

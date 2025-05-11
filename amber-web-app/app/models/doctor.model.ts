@@ -5,7 +5,7 @@ export interface DoctorAttributes {
   role: string;
   slug: string;
   cvText: Array<{
-    type: string;
+    type: "heading" | "paragraph" | "list";
     children: Array<{
       text: string;
       type: string;
@@ -20,6 +20,7 @@ export interface DoctorAttributes {
       id: number;
       attributes: {
         url: string;
+        alternativeText: string;
       };
     };
   };

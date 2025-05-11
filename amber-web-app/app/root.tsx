@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "react-router";
-import {HeroUIProvider} from "@heroui/react";
+import { HeroUIProvider } from "@heroui/react";
 import i18next from "i18next";
 import { initReactI18next, useSSR } from 'react-i18next';
 import Backend from 'i18next-http-backend';
@@ -24,15 +24,15 @@ export interface RootLoader {
   ENV: { GOOGLE_API_KEY: string, WEB_CMS_BASE_URL: string, [key: string]: string },
   services: ServiceRequestModel,
   doctors: DoctorRequestModel,
-  initialLanguage: string, 
+  initialLanguage: string,
   initialI18nStore: Record<string, any>
 }
 
 export const links: Route.LinksFunction = () => [
-  { rel: "apple-touch-icon", sizes:"180x180", href: "/apple-touch-icon.png" },
-  { rel: "icon", type: "image/png", sizes:"32x32", href: "/favicon-32x32.png" },
-  { rel: "icon", type: "image/png", sizes:"16x16", href: "/favicon-16x16.png" },
-  { rel: "icon", href: "data:image/x-icon;base64,AA"},
+  { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+  { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+  { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+  { rel: "icon", href: "data:image/x-icon;base64,AA" },
   { rel: "manifest", href: "/site.webmanifest" },
 ];
 
@@ -69,11 +69,11 @@ export async function loader({ request }: { request: Request }) {
   // Fetch services data
   let services = await fetch(
     apiUrl +
-      "services?" +
-      new URLSearchParams({
-        locale: locale,
-        "populate[image][fields][0]": "url",
-      }),
+    "services?" +
+    new URLSearchParams({
+      locale: locale,
+      "populate[image][fields][0]": "url",
+    }),
     {
       method: "get",
       headers: new Headers({
@@ -86,11 +86,11 @@ export async function loader({ request }: { request: Request }) {
   // Fetch doctors data
   let doctors = await fetch(
     apiUrl +
-      "doctors?" +
-      new URLSearchParams({
-        locale: locale,
-        "populate[image][fields][0]": "url",
-      }),
+    "doctors?" +
+    new URLSearchParams({
+      locale: locale,
+      "populate[image][fields][0]": "url",
+    }),
     {
       method: "get",
       headers: new Headers({
@@ -99,14 +99,13 @@ export async function loader({ request }: { request: Request }) {
       }),
     }
   ).then((res) => res.json());
-
   let ENV = { GOOGLE_API_KEY: process.env.GOOGLE_API_KEY, WEB_CMS_BASE_URL: process.env.WEB_CMS_BASE_URL };
 
-  return ({ ENV, services, doctors, initialLanguage, initialI18nStore} as RootLoader);
+  return ({ ENV, services, doctors, initialLanguage, initialI18nStore } as RootLoader);
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const {initialI18nStore, initialLanguage} = useLoaderData();
+  const { initialI18nStore, initialLanguage } = useLoaderData();
   useSSR(initialI18nStore, initialLanguage);
   return (
     <html lang={initialLanguage}>
@@ -118,9 +117,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <HeroUIProvider>
-          <AmberNavbar />
-          {children}
-          <AmberFooter />
+          <div className="flex flex-col min-h-screen">
+            <AmberNavbar />
+            {children}
+            <AmberFooter />
+          </div>
           <ScrollRestoration />
           <Scripts />
         </HeroUIProvider>

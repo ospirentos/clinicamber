@@ -1,21 +1,59 @@
-export const RichTextRenderer = ({ type, children, level, format }) => {
+interface RichTextRendererProps {
+  type: "heading" | "paragraph" | "list";
+  children: TextNode[] | ListItemNode[];
+  level?: number;
+  format?: "unordered" | "ordered";
+}
+
+interface HeaderProps {
+  level: number;
+  children: TextNode[];
+}
+
+interface ParagraphProps {
+  children: TextNode[];
+}
+
+interface ListProps {
+  format: "unordered" | "ordered";
+  children: ListItemNode[];
+}
+
+interface ListItemsProps {
+  children: ListItemNode[];
+}
+
+interface TextProps {
+  children: TextNode[];
+}
+
+interface TextNode {
+  text: string;
+  bold?: boolean;
+}
+
+interface ListItemNode {
+  children: TextNode[];
+}
+
+export const RichTextRenderer = ({ type, children, level, format }: RichTextRendererProps) => {
   return (
     <>
       {(() => {
         switch (type) {
           case "heading":
-            return <Header level={level} children={children} />;
+            return <Header level={level!} children={children as TextNode[]} />;
           case "paragraph":
-            return <Paragraph children={children} />;
+            return <Paragraph children={children as TextNode[]} />;
           case "list":
-            return <List format={format} children={children} />;
+            return <List format={format!} children={children as ListItemNode[]} />;
         }
       })()}
     </>
   );
 };
 
-const Header = ({ level, children }) => {
+const Header = ({ level, children }: HeaderProps) => {
   return (
     <>
       {(() => {
@@ -56,7 +94,7 @@ const Header = ({ level, children }) => {
   );
 };
 
-export const Paragraph = ({ children }) => {
+export const Paragraph = ({ children }: ParagraphProps) => {
   return (
     <>
       {(() => (
@@ -68,7 +106,7 @@ export const Paragraph = ({ children }) => {
   );
 };
 
-const List = ({ format, children }) => {
+const List = ({ format, children }: ListProps) => {
   return (
     <>
       {(() => {
@@ -91,7 +129,7 @@ const List = ({ format, children }) => {
   );
 };
 
-const ListItems = ({ children }) => {
+const ListItems = ({ children }: ListItemsProps) => {
   return (
     <>
       {(() => {
@@ -105,7 +143,7 @@ const ListItems = ({ children }) => {
   );
 };
 
-const Text = ({ children }) => {
+const Text = ({ children }: TextProps) => {
   return (
     <>
       {children.map((item, index) =>

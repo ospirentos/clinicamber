@@ -4,7 +4,7 @@ export interface BlogAttributes {
   firstTitle: string;
   secondTitle: string;
   fullText: Array<{
-    type: string;
+    type: "heading" | "paragraph" | "list";
     children: Array<{
       text: string;
       type: string;
@@ -20,6 +20,7 @@ export interface BlogAttributes {
       id: number;
       attributes: {
         url: string;
+        alternativeText: string;
       };
     };
   };

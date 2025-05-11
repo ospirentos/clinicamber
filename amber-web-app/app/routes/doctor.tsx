@@ -3,7 +3,7 @@ import type { Route } from "./+types/doctor";
 import type { DoctorRequestModel } from "~/models/doctor.model";
 
 export interface DoctorLoader {
-  data: DoctorRequestModel | null;
+  doctorData: DoctorRequestModel | null;
   error: string | null;
 }
 
@@ -30,10 +30,10 @@ export async function loader({ params, request }: Route.LoaderArgs) {
       }
     ).then((res) => res.json());
 
-    return { data: doctor, error: null};
+    return { doctorData: doctor, error: null};
   }
 
-  return {data: null, error: 'Failed to load doctor data'};
+  return {doctorData: null, error: 'Failed to load doctor data'};
 }
 
 export default function Doctors() {
