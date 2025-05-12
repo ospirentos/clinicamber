@@ -17,7 +17,7 @@ import AmberNavbar from "./components/amber-navbar/amber-navbar";
 import "./i18n";
 import "./app.css";
 import AmberFooter from "./components/amber-footer/amber-footer";
-import type { Service, ServiceRequestModel } from "./models/service.model";
+import type { ServiceRequestModel } from "./models/service.model";
 import type { DoctorRequestModel } from "./models/doctor.model";
 
 export interface RootLoader {
