@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-    Navbar,
-    NavbarBrand,
-    NavbarContent,
-    NavbarItem,
-    NavbarMenu,
-    NavbarMenuItem,
-    NavbarMenuToggle,
-  } from "@heroui/navbar";
-  import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@heroui/react";
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+} from "@heroui/navbar";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@heroui/react";
 import { Link, useLoaderData } from "react-router";
-// import AmberLogo from "../assets/amber-logo.svg";
 import { AmberLogo } from "../../assets/AmberLogo";
 import { ChevronDown } from "../../assets/ChevronDown";
 import type { Service } from "../../models/service.model";
@@ -36,7 +35,7 @@ const menuItems = [
   },
   {
     text: "contact",
-    link: "/contactus",
+    link: "/contact",
   },
 ];
 
@@ -55,17 +54,17 @@ export default function AmberNavbar() {
         />
         <Link to="/">
           <NavbarBrand>
-              <div style={{ width: "90px" }}>
-                <AmberLogo />
+            <div style={{ width: "90px" }}>
+              <AmberLogo />
+            </div>
+            <span>
+              <div className="text-amber-500 font-semibold text-lg leading-3">
+                Amber
               </div>
-              <span>
-                <div className="text-amber-500 font-semibold text-lg leading-3">
-                  Amber
-                </div>
-                <span className="text-amber-500 text-sm sm:text-base">
-                  {t("bannerTitle")}
-                </span>
+              <span className="text-amber-500 text-sm sm:text-base">
+                {t("bannerTitle")}
               </span>
+            </span>
           </NavbarBrand>
         </Link>
       </NavbarContent>
@@ -118,7 +117,7 @@ export default function AmberNavbar() {
         <NavbarItem
           className="hover:text-amber-500 transition"
         >
-          <Link to="/contactus">{t("contact")}</Link>
+          <Link to="/contact">{t("contact")}</Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
@@ -141,6 +140,7 @@ export default function AmberNavbar() {
         ))}
       </NavbarMenu>
     </Navbar>
-)}
+  )
+}
 
 
