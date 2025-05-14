@@ -28,6 +28,9 @@ export interface RootLoader {
   initialI18nStore: Record<string, any>
 }
 
+export const allowedLanguages = ['tr', 'en'];
+export const fallbackLanguage = 'tr';
+
 export const links: Route.LinksFunction = () => [
   { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
   { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
@@ -45,7 +48,10 @@ export const meta = () => [
 ];
 
 export async function loader({ request }: { request: Request }) {
-  const locale = request.headers.get('accept-language')?.split(',')[0] || 'tr-TR';
+  const rawLocale = request.headers.get('accept-language')?.split(',')[0] || fallbackLanguage;
+  let locale = rawLocale.split('-')[0];
+  if (!allowedLanguages.includes(locale)) locale = fallbackLanguage;
+
   const i18nInstance = i18next.createInstance();
   const baseUrl = request.url.match(/https?:\/\/[^\/]+/gm)?.[0];
 
@@ -54,10 +60,13 @@ export async function loader({ request }: { request: Request }) {
     .use(initReactI18next)
     .init({
       lng: locale,
-      fallbackLng: 'tr',
+      fallbackLng: allowedLanguages,
+      supportedLngs: allowedLanguages,
       load: "languageOnly",
       backend: {
         loadPath: baseUrl + '/locales/{{lng}}/{{ns}}.json',
+        allowMultiLoading: false,
+        reloadInterval: false
       }
     });
 
@@ -71,7 +80,7 @@ export async function loader({ request }: { request: Request }) {
     apiUrl +
     "services?" +
     new URLSearchParams({
-      locale: locale,
+      locale: initialLanguage,
       "populate[image][fields][0]": "url",
     }),
     {
@@ -88,7 +97,7 @@ export async function loader({ request }: { request: Request }) {
     apiUrl +
     "doctors?" +
     new URLSearchParams({
-      locale: locale,
+      locale: initialLanguage,
       "populate[image][fields][0]": "url",
     }),
     {

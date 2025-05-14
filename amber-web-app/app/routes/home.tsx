@@ -4,6 +4,7 @@ import NodeCache from "node-cache";
 import MainPageContents from "~/components/main-page-contents/MainPageContents";
 import type { BlogRequestModel } from "~/models/blog.model";
 import type { GoogleReview } from "~/models/google.model";
+import { allowedLanguages, fallbackLanguage } from "~/root";
 
 export interface HomeLoader {
   googleReviews: GoogleReview;
@@ -12,7 +13,7 @@ export interface HomeLoader {
 
 const cache = new NodeCache();
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Amber Ağız ve Diş Sağlığı Polikliniği" },
     { name: "description", content: "ClinicAmber Websitesine Hoş Geldiniz" },
@@ -20,7 +21,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const locale = request.headers.get('accept-language')?.split(',')[0] || 'tr-TR';
+  const rawLocale = request.headers.get('accept-language')?.split(',')[0] || fallbackLanguage;
+  let locale = rawLocale.split('-')[0];
+  if (!allowedLanguages.includes(locale)) locale = fallbackLanguage;
 
   //load google content
   const cacheKey = "google-place-data";
@@ -30,14 +33,14 @@ export async function loader({ request }: Route.LoaderArgs) {
     console.log('Google Reviews: Cache miss, Saving google places data to cache');
     let googleReviews = await fetch(
       "https://maps.googleapis.com/maps/api/place/details/json?" +
-        new URLSearchParams({
-          fields: "reviews",
-          reviews_no_translations: "true",
-          ...(process.env.GOOGLE_PLACE_ID && { place_id: process.env.GOOGLE_PLACE_ID }),
-          ...(process.env.GOOGLE_API_KEY_SSR && { key: process.env.GOOGLE_API_KEY_SSR }),
-        })
+      new URLSearchParams({
+        fields: "reviews",
+        reviews_no_translations: "true",
+        ...(process.env.GOOGLE_PLACE_ID && { place_id: process.env.GOOGLE_PLACE_ID }),
+        ...(process.env.GOOGLE_API_KEY_SSR && { key: process.env.GOOGLE_API_KEY_SSR }),
+      })
     ).then((res) => res.json());
-    
+
     if (googleReviews.status !== 'OK') {
       console.error('Google API: ', googleReviews.error_message);
     } else {
@@ -54,11 +57,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   let blogs = await fetch(
     apiUrl +
-      "blogs?" +
-      new URLSearchParams({
-        locale: locale,
-        "populate[image][fields][0]": "url",
-      }),
+    "blogs?" +
+    new URLSearchParams({
+      locale: locale,
+      "populate[image][fields][0]": "url",
+    }),
     {
       method: "get",
       headers: new Headers({
@@ -68,7 +71,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     }
   ).then((res) => res.json());
 
-  return { googleReviews: cache.get(cacheKey), blogs} as HomeLoader;
+  return { googleReviews: cache.get(cacheKey), blogs } as HomeLoader;
 }
 
 export async function action({ request }: Route.ActionArgs) {

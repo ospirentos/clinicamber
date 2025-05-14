@@ -1,14 +1,18 @@
 import { Service } from "~/components/Service";
 import type { Route } from "./+types/service";
 import type { ServiceRequestModel } from "~/models/service.model";
+import { allowedLanguages, fallbackLanguage } from "~/root";
 
 export interface ServiceLoader {
   serviceData: ServiceRequestModel | null;
   error: string | null;
 }
 
-export const loader = async ({ params, request }: Route.LoaderArgs) => {
-  const locale = request.headers.get('accept-language')?.split(',')[0] || 'tr-TR';
+export async function loader({ params, request }: Route.LoaderArgs) {
+  const rawLocale = request.headers.get('accept-language')?.split(',')[0] || fallbackLanguage;
+  let locale = rawLocale.split('-')[0];
+  if (!allowedLanguages.includes(locale)) locale = fallbackLanguage;
+
   const apiUrl = process.env.API_URL;
   let service = await fetch(
     apiUrl +
