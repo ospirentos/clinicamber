@@ -2,6 +2,11 @@ FROM node:22
 
 WORKDIR /app
 
-EXPOSE 3000
+COPY package.json package-lock.json ./
+RUN npm install
 
-CMD ["sleep", "infinity"]
+COPY . .
+
+EXPOSE 1338
+
+CMD ["npm", "run", "start"]

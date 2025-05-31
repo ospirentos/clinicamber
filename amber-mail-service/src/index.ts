@@ -1,51 +1,100 @@
-import express from 'express';
-import { Request, Response } from 'express';
-import nodemailer from 'nodemailer';
+import express from "express";
+import { Request, Response } from "express";
+import nodemailer from "nodemailer";
 
 const app = express();
-const port = 3000;
+const port = 1338;
 
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, TypeScript with Express!');
+// Health check endpoint for Docker container monitoring
+app.get("/health", (req: Request, res: Response) => {
+  const healthCheck = {
+    uptime: process.uptime(),
+    message: "OK",
+    timestamp: Date.now(),
+    service: "mail-sender",
+    version: process.env.npm_package_version || "1.0.0",
+    environment: process.env.NODE_ENV || "development",
+  };
+
+  try {
+    // Check if required environment variables are present
+    const {
+      MAIL_SENDER_HOST,
+      MAIL_SENDER_PORT,
+      MAIL_SENDER_USERNAME,
+      MAIL_SENDER_PASSWORD,
+    } = process.env;
+
+    if (
+      !MAIL_SENDER_HOST ||
+      !MAIL_SENDER_PORT ||
+      !MAIL_SENDER_USERNAME ||
+      !MAIL_SENDER_PASSWORD
+    ) {
+      healthCheck.message =
+        "Configuration Error - Missing required environment variables";
+      return res.status(503).json(healthCheck);
+    }
+
+    res.status(200).json(healthCheck);
+  } catch (error) {
+    healthCheck.message = "Service Unavailable";
+    res.status(503).json(healthCheck);
+  }
 });
 
 // @ts-ignore
-app.post('/sendInfoMail', async (req: Request, res: Response) => {
+app.post("/sendInfoMail", async (req: Request, res: Response) => {
   const { nameSurname, phoneNumber, message } = req.body;
 
   if (!nameSurname || !phoneNumber || !message) {
-    return res.status(400).send('All fields are required: nameSurname, phoneNumber, and message.');
+    return res
+      .status(400)
+      .send("All fields are required: nameSurname, phoneNumber, and message.");
   }
 
   try {
-    // Configure the email transporter
-    const transporter = nodemailer.createTransport({
-      host: 'mail.clinicamber.com', // Email server host
-      port: 465, // Port for secure SMTP
-      secure: true, // Use TLS
-      auth: {
-        user: 'examplemail', // Replace with your email username
-        pass: 'examplepw', // Replace with your email password
-      },
-    });
+    const {
+      MAIL_SENDER_HOST,
+      MAIL_SENDER_PORT,
+      MAIL_SENDER_USERNAME,
+      MAIL_SENDER_PASSWORD,
+    } = process.env;
+    if (
+      MAIL_SENDER_HOST &&
+      MAIL_SENDER_PORT &&
+      MAIL_SENDER_USERNAME &&
+      MAIL_SENDER_PASSWORD
+    ) {
+      const transporter = nodemailer.createTransport({
+        host: MAIL_SENDER_HOST,
+        port: parseInt(MAIL_SENDER_PORT),
+        secure: true,
+        auth: {
+          user: MAIL_SENDER_USERNAME,
+          pass: MAIL_SENDER_PASSWORD,
+        },
+      });
 
-    // Define the email options
-    const mailOptions = {
-      from: 'examplemail', // Sender address
-      to: 'example receiver', // Replace with the recipient's email address
-      subject: 'This is a Test Mail',
-      text: `Name-Surname: ${nameSurname}\nPhone: ${phoneNumber}\nMessage: ${message}`,
-    };
+      const mailOptions = {
+        from: MAIL_SENDER_USERNAME,
+        to: MAIL_SENDER_USERNAME,
+        subject: `${nameSurname} adlı kullanıcıdan mesajınız var`,
+        text: `Telefon Numarası: ${phoneNumber}\n Kullanıcının Mesajı: ${message}`,
+      };
 
-    // Send the email
-    await transporter.sendMail(mailOptions);
+      // Send the email
+      await transporter.sendMail(mailOptions);
 
-    res.status(200).send('Information received and email sent successfully.');
+      res.status(200).send("Information received and email sent successfully.");
+    } else {
+      throw "unknown-error";
+    }
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).send('Failed to send email.');
+    console.error("Error sending email:", error);
+    res.status(500).send("Failed to send email.");
   }
 });
 

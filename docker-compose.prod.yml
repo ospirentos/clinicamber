@@ -98,9 +98,40 @@ services:
       - GOOGLE_PLACE_ID=${GOOGLE_PLACE_ID}
       - NODE_ENV=${NODE_ENV}
       - PORT=3000
+      - MAIL_SENDER_URL=${MAIL_SENDER_URL}
+
+  mail-sender:
+    container_name: amber-mail-sender
+    restart: unless-stopped
+    build:
+      context: amber-mail-service
+      dockerfile: ./Dockerfile.prod
+    ports:
+      - "1338:1338"
+    networks:
+      - amber-cms
+    env_file: .env
+    environment:
+      - MAIL_SENDER_USERNAME=${MAIL_SENDER_USERNAME}
+      - MAIL_SENDER_PASSWORD=${MAIL_SENDER_PASSWORD}
+      - MAIL_SENDER_HOST=${MAIL_SENDER_HOST}
+      - MAIL_SENDER_PORT=${MAIL_SENDER_PORT}
+      - NODE_ENV=${NODE_ENV}
+    # Production volumes - using named volumes instead of bind mounts for better performance and security
+    volumes:
+      - mail-sender-logs:/app/logs:z
+    # Health check for production monitoring
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:1338/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
 volumes:
   amber-cms-data:
   static-web-files:
+  mail-sender-logs:
 
 networks:
   amber-cms:

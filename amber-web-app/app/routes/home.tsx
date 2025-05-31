@@ -77,10 +77,20 @@ export async function loader({ request }: Route.LoaderArgs) {
 export async function action({ request }: Route.ActionArgs) {
   const body = await request.formData();
   const extractedFormData = Object.fromEntries(body.entries());
-  const message = `*İsim Soyisim:* ${extractedFormData.name}\n*Telefon Numarası:* ${extractedFormData.tel}\n*Mesajım:*\n${extractedFormData.message}\n`;
-  const redirectUrl = `https://wa.me/905527138204?text=${encodeURIComponent(message)}`;
 
-  return redirect(redirectUrl);
+  await fetch(process.env.MAIL_SENDER_URL + '/sendInfoMail', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      nameSurname: extractedFormData.name,
+      phoneNumber: extractedFormData.tel,
+      message: extractedFormData.message,
+    }),
+  });
+
+  return null;
 }
 
 export default function Home() {
