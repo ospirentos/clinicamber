@@ -1,5 +1,4 @@
-import express from "express";
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import nodemailer from "nodemailer";
 
 const app = express();
@@ -8,7 +7,7 @@ const port = 1338;
 app.use(express.json());
 
 // Health check endpoint for Docker container monitoring
-app.get("/health", (req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response): void => {
   const healthCheck = {
     uptime: process.uptime(),
     message: "OK",
@@ -35,7 +34,8 @@ app.get("/health", (req: Request, res: Response) => {
     ) {
       healthCheck.message =
         "Configuration Error - Missing required environment variables";
-      return res.status(503).json(healthCheck);
+      res.status(503).json(healthCheck);
+      return;
     }
 
     res.status(200).json(healthCheck);
@@ -45,14 +45,14 @@ app.get("/health", (req: Request, res: Response) => {
   }
 });
 
-// @ts-ignore
-app.post("/sendInfoMail", async (req: Request, res: Response) => {
+app.post("/sendInfoMail", async (req: Request, res: Response): Promise<void> => {
   const { nameSurname, phoneNumber, message } = req.body;
 
   if (!nameSurname || !phoneNumber || !message) {
-    return res
+    res
       .status(400)
       .send("All fields are required: nameSurname, phoneNumber, and message.");
+    return;
   }
 
   try {
