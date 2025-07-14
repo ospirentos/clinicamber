@@ -45,7 +45,7 @@ export function ContactUsForm() {
           />
         </div>
         <div className="my-6 flex justify-center">
-          <Button className="bg-green-500 text-white" type="submit">Whatsapp'tan Gönder</Button>
+          <Button className="bg-amber-500 text-white" type="submit">{t("send")}</Button>
         </div>
       </Form>
       <Modal
