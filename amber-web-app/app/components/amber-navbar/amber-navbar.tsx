@@ -17,29 +17,6 @@ import type { Service } from "../../models/service.model";
 import type { RootLoader } from "~/root";
 
 
-const menuItems = [
-  {
-    text: "home",
-    link: "/",
-  },
-  {
-    text: "services",
-    link: "/",
-  },
-  {
-    text: "doctors",
-    link: "/",
-  },
-  {
-    text: "blog",
-    link: "/",
-  },
-  {
-    text: "contact",
-    link: "/contact",
-  },
-];
-
 export default function AmberNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [hoverServices, setHoverServices] = useState(false);
@@ -157,23 +134,91 @@ export default function AmberNavbar() {
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.text}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                    ? "danger"
-                    : "foreground"
-              }
-              className="w-full"
-              to={item.link}
-            >
-              {t(item.text)}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+        {/* Home */}
+        <NavbarMenuItem>
+          <Link className="w-full" to="/">
+            {t("home")}
+          </Link>
+        </NavbarMenuItem>
+        
+        {/* Services Dropdown */}
+        <NavbarMenuItem>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                disableRipple
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent w-full justify-start text-base"
+                endContent={<ChevronDown fill="rgb(0,0,0)" size={16} />}
+                radius="sm"
+                variant="light"
+              >
+                {t("services")}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Mobile dropdown list of services" items={services.data}>
+              {(service) => (
+                <DropdownItem
+                  key={service.attributes.slug}
+                  textValue={service.attributes.title}
+                >
+                  <Link
+                    className="w-full h-full flex items-center px-3 py-2 transition rounded"
+                    to={'/services/' + service.attributes.slug}
+                  >
+                    {service.attributes.title}
+                  </Link>
+                </DropdownItem>
+              )}
+            </DropdownMenu>
+          </Dropdown>
+        </NavbarMenuItem>
+
+        {/* Doctors Dropdown */}
+        <NavbarMenuItem>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                disableRipple
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent w-full justify-start text-base"
+                endContent={<ChevronDown fill="rgb(0,0,0)" size={16} />}
+                radius="sm"
+                variant="light"
+              >
+                {t("doctors")}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Mobile dropdown list of doctors" items={doctors.data}>
+              {(doctor) => (
+                <DropdownItem
+                  key={doctor.attributes.slug}
+                  textValue={doctor.attributes.name}
+                  className="p-0"
+                >
+                  <Link
+                    className="w-full h-full flex items-center px-3 py-2 transition rounded"
+                    to={'/doctors/' + doctor.attributes.slug}
+                  >
+                    {doctor.attributes.name}
+                  </Link>
+                </DropdownItem>
+              )}
+            </DropdownMenu>
+          </Dropdown>
+        </NavbarMenuItem>
+
+        {/* Blog */}
+        <NavbarMenuItem>
+          <Link className="w-full" to="#">
+            {t("blog")}
+          </Link>
+        </NavbarMenuItem>
+
+        {/* Contact */}
+        <NavbarMenuItem>
+          <Link className="w-full" to="/contact">
+            {t("contact")}
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   )
