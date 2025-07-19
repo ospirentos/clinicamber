@@ -48,7 +48,7 @@ export default function AmberNavbar() {
   const { services, doctors } = useLoaderData<RootLoader>();
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar onMenuOpenChange={setIsMenuOpen} className="border-b border-gray-200">
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
