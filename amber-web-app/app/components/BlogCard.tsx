@@ -14,10 +14,10 @@ export function BlogCard({ firstTitle, secondTitle, image, slug }: Partial<BlogA
         isPressable
       >
         <CardHeader className="absolute z-10 top-1 flex-col !items-start">
-          <p className="text-tiny text-white/60 uppercase font-bold">
+          <p className="text-tiny text-black/60 uppercase font-bold">
             {firstTitle}
           </p>
-          <h4 className="text-white font-medium text-large">{secondTitle}</h4>
+          <h4 className="text-black font-medium text-large">{secondTitle}</h4>
         </CardHeader>
         <Image
           removeWrapper
