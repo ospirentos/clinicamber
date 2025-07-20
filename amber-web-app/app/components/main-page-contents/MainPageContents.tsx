@@ -10,41 +10,94 @@ import { BlogCard } from "../BlogCard";
 import { Map } from "../GoogleMap";
 import { ContactUsForm } from "../ContactUsForm";
 import { WhatsAppFloatingButton } from "~/assets/WhatsAppFloatingButton";
+import { useEffect, useRef, useState } from "react";
 import banner from "../../assets/main-bg-darker.png";
+import dentistLocationIcon from "../../assets/dental-care-location.svg";
+import smilingDentistIcon from "../../assets/smiling-dentist.svg";
+import denstisChairIcon from "../../assets/denstist-chair.svg";
+import contactUsIcon from "../../assets/contact-us.svg";
+import phoneIcon from "../../assets/phone.svg";
+import whatsappIcon from "../../assets/whatsapp.svg";
 import { Button } from "@heroui/react";
+import { Slide } from "react-slideshow-image";
 
 export default function MainPageContents() {
+  const [isWhatsAppButtonVisible, setIsWhatsAppButtonVisible] = useState(false);
+  const whatsappButtonRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => setIsWhatsAppButtonVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    if (whatsappButtonRef.current) {
+      observer.observe(whatsappButtonRef.current);
+    }
+    return () => {
+      if (whatsappButtonRef.current) {
+        observer.unobserve(whatsappButtonRef.current);
+      }
+    };
+  }, []);
   const { t } = useTranslation();
   const { googleReviews, blogs } = useLoaderData<HomeLoader>();
   const matches = useMatches();
   const { services, doctors } = matches.find((match) => match.id === "root")?.data as RootLoader;
   return (
     <>
-      <div className="relative text-center overflow-hidden max-w-[1080px] m-auto">
-        <img
-          src={banner}
-          alt={t("bannerAltText", "three pictures of clinic amber")}
-          className="w-[1080px]"
-        />
-        <div className="mx-auto sm:absolute top-[calc(50%-144px)] left-16 max-w-[400px]">
-          <div className="font-vollkorn italic mt-4 text-amber-500 sm:text-4xl">
-            "{t("bannerSideText")}"
-          </div>
-          <div className="hidden sm:block font-vollkorn italic mt-2 text-white text-xl">
-            {t("bannerDescriptionText")}
-          </div>
-          <div className="flex justify-around max-w-[360px] mx-auto my-4">
-            <Button className="bg-amber-500 text-white">
-              {t("bannerButtonAppoint")}
-            </Button>
-            <Button className="bg-white text-amber-500 border border-amber-500 ">
-              {t("bannerButtonContactUs")}
-            </Button>
-          </div>
-        </div>
+      <div className="relative w-full text-center overflow-hidden">
+        <Slide autoplay infinite duration={5000} indicators canSwipe>
+          <div
+            className="flex items-center justify-center bg-cover h-[600px] w-full"
+            style={{ backgroundImage: `url(${banner})` }}
+          ></div>
+          <div
+            className="flex items-center justify-center bg-cover h-[600px] w-full"
+            style={{ backgroundImage: `url(${banner})` }}
+          ></div>
+        </Slide>
       </div>
       <div className="flex items-center w-full h-auto justify-center">
         <div className="px-6 w-full max-w-[1024px]">
+          <SectionTitle title={t("aboutUs")} />
+          <div className="mb-16 flex sm:flex-row flex-col items-center gap-8">
+            <img src={dentistLocationIcon} className="h-[100px]" />
+            <span>{t('mainPageClinicamberDesc')}</span>
+          </div>
+          <div className="mb-16 flex sm:flex-row flex-col items-center gap-8">
+            <img src={denstisChairIcon} className="h-[100px]" />
+            <div>{t('mainPageComfortDesc')}</div>
+          </div>
+          <div className="mb-16 flex sm:flex-row flex-col items-center gap-8">
+            <img src={smilingDentistIcon} className="h-[100px]" />
+            <div>{t('mainPageSmileDesc')}</div>
+          </div>
+          <div className="sm:flex-row sm:gap-16 w-full flex flex-col justify-center items-center gap-4">
+            <a href="tel:+905527138204" className="">
+              <Button variant="light" className=" text-amber-500 border border-amber-500 w-[240px]" size="lg">
+                <img src={phoneIcon} className="h-5" />+90 552 713 82 04
+              </Button>
+            </a>
+            <Button variant="light" className="bg-white text-amber-500 border border-amber-500 w-[240px]" size="lg"
+              onPress={() => {
+                const el = document.getElementById('contactUs');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}>
+              <img src={contactUsIcon} />{t("bannerButtonContactUs")}
+            </Button>
+            <a ref={whatsappButtonRef} href={t("whatsappLink", "https://wa.me/905527138204")} >
+              <Button
+                style={{ backgroundColor: "white", borderColor: "#25D366", color: "#25D366" }}
+                className="text-white border w-[240px]"
+                size="lg"
+              >
+                <img src={whatsappIcon} className="h-5" />{t("buttonWhatsApp")}
+              </Button>
+            </a>
+          </div>
+
           <SectionTitle title={t("doctors")} />
           <div className="flex gap-4 overflow-x-auto sm:max-w-[900px] sm:gap-6 sm:grid sm:grid-cols-12 sm:grid-rows-auto px-8">
             {doctors?.data?.map((doctor, index) => (
@@ -106,7 +159,10 @@ export default function MainPageContents() {
             </div>
           </div>
         </div>
-        <div className="z-20 fixed right-4 bottom-6 lg:right-[calc(50%-512px)] sm:top-20 pointer-events-none">
+        <div
+          className={`z-20 fixed right-4 bottom-6 lg:right-[calc(50%-720px)] sm:top-20 pointer-events-none transition-all duration-500 ease-in-out ${isWhatsAppButtonVisible ? 'opacity-0 translate-y-8 pointer-events-none' : 'opacity-100 translate-y-0 pointer-events-auto'}`}
+          style={{ willChange: 'opacity, transform' }}
+        >
           <a
             className="pointer-events-auto"
             href={t("whatsappLink", "https://wa.me/905527138204")}
