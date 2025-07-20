@@ -4,6 +4,7 @@
   "bannerDescriptionText": "Sahip olduğumuz uzman hekim kadromuz ve son teknoloji aletlerimiz ile sizlere sağlıklı gülüşler verebilmek için çalışıyoruz. Hemen randevu oluşturun",
   "bannerButtonAppoint": "Randevu Oluştur",
   "bannerButtonContactUs": "Bize Ulaşın",
+  "buttonWhatsApp": "Whatsapp İle Ulaşın",
   "home": "Anasayfa",
   "services": "Hizmetler",
   "doctors": "Doktorlarımız",
@@ -18,5 +19,9 @@
   "addressLine1": "Orhangazi, Esenyalı Orhangazi Mah, Alparslan Türkeş Cd No:2/A.",
   "addressLine2": "Pendik/İstanbul",
   "contactUsTitle": "Bize Ulaşın",
-  "send": "Gönder"
+  "send": "Gönder",
+  "aboutUs": "Hakkımızda",
+  "mainPageClinicamberDesc": "Clinicamber, İstanbul’un Pendik ilçesinde hizmet veren, modern donanımı ve uzman kadrosuyla öne çıkan bir diş polikliniğidir. Çocuk dostu yaklaşımıyla özellikle genç hastalar için güvenli ve sıcak bir tedavi ortamı sunarken, çocuk diş sağlığı konusunda uzmanlaşmış hekim kadrosuyla farklı yaş gruplarına özel çözümler üretmektedir.",
+  "mainPageComfortDesc": "Ferah iç mimarisi ve teknolojik altyapısı sayesinde hastalarımıza hem konforlu hem de etkili bir tedavi süreci sağlıyoruz. Klinik bünyemizde iletişimi güçlü, güler yüzlü ve alanında deneyimli bir ekip görev almakta; cerrahi operasyonlardan genel diş hekimliği hizmetlerine kadar geniş yelpazede çözümler sunulmaktadır.",
+  "mainPageSmileDesc": "Clinicamber’de sağlık ve güveni bir araya getirerek, her bireyin sağlıklı bir gülümsemeye kavuşmasını hedefliyoruz"
 }
