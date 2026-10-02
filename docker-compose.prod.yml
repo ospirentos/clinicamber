@@ -90,8 +90,9 @@ services:
       - NODE_ENV=${NODE_ENV}
       - PORT=3000
       - MAIL_SENDER_URL=${MAIL_SENDER_URL}
-      # Host has no IPv6: avoid Node 20 happy-eyeballs ETIMEDOUT on first outbound fetch
-      - NODE_OPTIONS=--dns-result-order=ipv4first --network-family-autoselection-attempt-timeout=1000
+      # Host has no IPv6 and TCP connects to some upstreams (Google) take ~2s here;
+      # Node 20's happy-eyeballs aborts each attempt after 250ms, so disable it
+      - NODE_OPTIONS=--dns-result-order=ipv4first --no-network-family-autoselection
 
   mail-sender:
     container_name: amber-mail-sender
