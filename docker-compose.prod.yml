@@ -1,5 +1,3 @@
-version: "3.5"
-
 services:
   amber-cms-app:
     container_name: amber-cms
@@ -26,47 +24,37 @@ services:
 
       - ./.env:/opt/app/.env
       - ./amber-cms/public/uploads:/opt/app/public/uploads:z
-    ports:
-      - "1337:1337"
+    # No published ports: only reachable through the reverse proxy on the internal network.
     networks:
       - amber-cms
     depends_on:
-      - amber-cmsDB
+      amber-cmsDB:
+        condition: service_healthy
 
   amber-cmsDB:
     container_name: amber-cmsDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
-    env_file: .env
-    image: postgres:14.5-alpine
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - amber-cms-data:/var/lib/postgresql/data/ #using a volume
-      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
-
-    ports:
-      - "5432:5432"
+      - amber-cms-data:/var/lib/postgresql/data/
+    # Never publish the database port. For admin access use an SSH tunnel:
+    #   ssh -L 5432:<container-ip>:5432 amber@clinicamber.com
+    # or: docker exec -it amber-cmsDB psql -U <user> <db>
     networks:
       - amber-cms
-
-  amber-cmsAdminer:
-    container_name: amber-cmsAdminer
-    image: adminer
-    restart: unless-stopped
-    ports:
-      - "9090:8080"
-    environment:
-      - ADMINER_DEFAULT_SERVER=amber-cmsDB
-    networks:
-      - amber-cms
-    depends_on:
-      - amber-cmsDB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   reverse-proxy:
     container_name: nginx-reverse-proxy
+    restart: unless-stopped
     build:
       context: nginx
       dockerfile: ./Dockerfile.prod
@@ -76,16 +64,19 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /etc/letsencrypt/live/clinicamber.com/fullchain.pem:/etc/nginx/ssl/fullchain.pem
-      - /etc/letsencrypt/live/clinicamber.com/privkey.pem:/etc/nginx/ssl/privkey.pem
+      # Mount the whole directory (not single files) so renewed certs are picked up on reload.
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/www/certbot:/var/www/certbot:ro
+    depends_on:
+      - amber-cms-app
+      - web-app
+
   web-app:
     container_name: amber-web-app
     restart: unless-stopped
     build:
       context: amber-web-app
       dockerfile: Dockerfile.prod
-    ports:
-      - "3000:3000"
     networks:
       - amber-cms
     env_file: .env
@@ -106,8 +97,6 @@ services:
     build:
       context: amber-mail-service
       dockerfile: ./Dockerfile.prod
-    ports:
-      - "1338:1338"
     networks:
       - amber-cms
     env_file: .env
@@ -117,12 +106,11 @@ services:
       - MAIL_SENDER_HOST=${MAIL_SENDER_HOST}
       - MAIL_SENDER_PORT=${MAIL_SENDER_PORT}
       - NODE_ENV=${NODE_ENV}
-    # Production volumes - using named volumes instead of bind mounts for better performance and security
     volumes:
       - mail-sender-logs:/app/logs:z
-    # Health check for production monitoring
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:1338/health"]
+      # node:alpine has no curl; busybox wget is available
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:1338/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -130,7 +118,6 @@ services:
 
 volumes:
   amber-cms-data:
-  static-web-files:
   mail-sender-logs:
 
 networks:
