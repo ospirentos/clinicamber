@@ -31,6 +31,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   if (!data) {
     console.log('Google Reviews: Cache miss, Saving google places data to cache');
+    // Reviews are optional: a Google outage or bad key must not take down the page
     let googleReviews = await fetch(
       "https://maps.googleapis.com/maps/api/place/details/json?" +
       new URLSearchParams({
@@ -39,10 +40,15 @@ export async function loader({ request }: Route.LoaderArgs) {
         ...(process.env.GOOGLE_PLACE_ID && { place_id: process.env.GOOGLE_PLACE_ID }),
         ...(process.env.GOOGLE_API_KEY_SSR && { key: process.env.GOOGLE_API_KEY_SSR }),
       })
-    ).then((res) => res.json());
+    )
+      .then((res) => res.json())
+      .catch((err) => {
+        console.error('Google API: request failed', err?.cause?.code ?? err);
+        return null;
+      });
 
-    if (googleReviews.status !== 'OK') {
-      console.error('Google API: ', googleReviews.error_message);
+    if (!googleReviews || googleReviews.status !== 'OK') {
+      if (googleReviews) console.error('Google API: ', googleReviews.error_message);
     } else {
       cache.set(cacheKey, googleReviews, 86400);
       console.log('Google Reviews: Saved google places data to cache.');
